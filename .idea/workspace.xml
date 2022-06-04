@@ -4,14 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23cd1d09-8d80-4db3-9171-188568541b5d" name="Changes" comment="fix .gitignore">
+    <list default="true" id="23cd1d09-8d80-4db3-9171-188568541b5d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/it/shifty/game/polimorphysm/Animal.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/it/shifty/game/polimorphysm/Cat.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/it/shifty/game/polimorphysm/Dog.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/it/shifty/game/polimorphysm/MainTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/it/shifty/game/polimorphysm/ValueReference.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +109,21 @@
       <option name="project" value="LOCAL" />
       <updated>1654354541862</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="fix .gitignore">
+      <created>1654354612809</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1654354612809</updated>
+    </task>
+    <task id="LOCAL-00005" summary="fix .gitignore">
+      <created>1654354618464</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1654354618464</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
