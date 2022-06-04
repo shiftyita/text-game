@@ -9,15 +9,13 @@ import java.util.List;
 @Setter
 public class Character extends Asset {
 
-    private int health = 100;
     private List<ItemObject> inventory;
     private Weapon primaryWeapon;
     private Weapon secondaryWeapon;
-    private ItemObject armor;
+    private Armor armor;
+    private boolean mainCharacter;
 
     public Character(String name, String description) {
-        super(name,description);
+        super(name,description, 100);
     }
-
-
 }

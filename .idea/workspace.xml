@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="23cd1d09-8d80-4db3-9171-188568541b5d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/shifty/game/gameobjects/Armor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/shifty/game/gameobjects/DamageAbsorber.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/shifty/game/gameobjects/DamageDealer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/shifty/game/gameobjects/Weapon.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/shifty/game/engine/AdventureGame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/shifty/game/engine/exception/LoseGameException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/shifty/game/gameobjects/Armor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/shifty/game/gameobjects/Armor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/shifty/game/gameobjects/Asset.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/shifty/game/gameobjects/Asset.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/shifty/game/gameobjects/Character.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/shifty/game/gameobjects/Character.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/shifty/game/gameobjects/ItemObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/shifty/game/gameobjects/ItemObject.java" afterDir="false" />
     </list>
@@ -21,8 +21,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -49,6 +49,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="it.shifty.game.engine.exception" />
       <recent name="it.shifty.game.polimorphysm" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
