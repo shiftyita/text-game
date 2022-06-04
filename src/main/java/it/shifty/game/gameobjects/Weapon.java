@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class Weapon extends ItemObject implements DamageDealer {
 
-    private int damage;
+    private int damage = 0;
     private int bonus;
     private int malus;
 

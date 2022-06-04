@@ -18,4 +18,6 @@ public class Character extends Asset {
     public Character(String name, String description) {
         super(name,description, 100);
     }
+
+
 }

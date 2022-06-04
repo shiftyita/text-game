@@ -14,7 +14,7 @@ public class Asset implements DamageAbsorber  {
     private String description;
 
     private boolean destroyed;
-    private int health = 0;
+    private int health = 99999;
     private boolean canBeDestroyed = true;
 
     public Asset(String name, String description) {
