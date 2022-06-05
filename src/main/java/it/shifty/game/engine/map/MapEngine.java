@@ -63,34 +63,57 @@ public class MapEngine {
 
     public void drawMap() {
         for (int x = 0; x < xSize; x++) {
-            for (int y = 0; y < ySize; y++) {
+            for (int y = 0; y < xSize; y++) {
                 if (!existsRoomInSpot(x,y))
-                    System.out.println("R");
+                    System.out.print("O");
                 else
-                    System.out.println("O");
+                    System.out.print("R");
             }
+            System.out.println("\r");
         }
     }
 
     public void calculateRoomSurroundigs() {
-        for (int x = 0; x < xSize; x++) {
-            for (int y = 0; y < ySize; y++) {
+        for (int y = 0; y < ySize; y++) {
+            for (int x = 0; x < xSize; x++) {
                 if (!existsRoomInSpot(x,y))
                     continue;
                 Room existingRoom = getRoom(x,y).get();
                 //get north
-                Optional<Room> northRoom = this.getRoom(x+1, y);
+                Optional<Room> northRoom = this.getRoom(x-1, y);
                 //get south
-                Optional<Room> southRoom = this.getRoom(x-1,y);
+                Optional<Room> southRoom = this.getRoom(x+1,y);
                 //get east
-                Optional<Room> eastRoom = this.getRoom(x, y - 1);
+                Optional<Room> eastRoom = this.getRoom(x, y + 1);
                 //get west
-                Optional<Room> westRoom = this.getRoom(x, y + 1);
+                Optional<Room> westRoom = this.getRoom(x, y - 1);
 
                 northRoom.ifPresent(existingRoom::setN);
                 southRoom.ifPresent(existingRoom::setS);
                 eastRoom.ifPresent(existingRoom::setE);
                 westRoom.ifPresent(existingRoom::setW);
+
+                System.out.println("La stanza in coordinata (" + existingRoom.getX() + "," + existingRoom.getY()+")");
+                if (northRoom.isPresent())
+                    System.out.println("confina a Nord con " + northRoom.get().getName());
+                else
+                    System.out.println("confina a Nord con un muro");
+
+                if (southRoom.isPresent())
+                    System.out.println("confina a Sud con " + southRoom.get().getName());
+                else
+                    System.out.println("confina a Sud con un muro");
+
+                if (westRoom.isPresent())
+                    System.out.println("confina ad Ovest con " + westRoom.get().getName());
+                else
+                    System.out.println("confina ad Ovest con un muro");
+
+                if (eastRoom.isPresent())
+                    System.out.println("confina ad Est con " + eastRoom.get().getName());
+                else
+                    System.out.println("confina ad Est con un muro");
+
             }
         }
     }

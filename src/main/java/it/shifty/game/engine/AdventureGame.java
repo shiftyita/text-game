@@ -14,12 +14,12 @@ public class AdventureGame {
     public static void main(String[] args) throws RoomMisplacedException {
 
         List<Room> roomList = new ArrayList<>();
-        roomList.add(new Room("NiceRoom", "Figa", 0,1 ));
-        roomList.add(new Room("NiceRoom", "Figa", 2,2 ));
-        roomList.add(new Room("NiceRoom", "Figa", 3,0 ));
-        roomList.add(new Room("NiceRoom", "Figa", 0,3 ));
+        roomList.add(new Room("0-0", "Figa", 0,0 ));
+        roomList.add(new Room("0-1", "Figa", 0,1 ));
+        roomList.add(new Room("1-0", "Figa", 1,0 ));
+        roomList.add(new Room("1-1", "Figa", 1,1 ));
 
-        MapEngine mapEngine = new MapEngine(roomList, 3,3);
+        MapEngine mapEngine = new MapEngine(roomList, 2,2);
 
         mapEngine.drawMap();
     }
