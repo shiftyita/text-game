@@ -13,8 +13,7 @@ import java.util.List;
 
 public class Game {
 
-    @Autowired
-    CommandParser parser;
+    CommandParser parser = new CommandParser();
 
     private List<Room> roomList = new ArrayList<>();
 
@@ -23,11 +22,11 @@ public class Game {
     }
 
     private void initializeGame() throws RoomMisplacedException {
-        roomList.add(new Room("0-0", "", 0,0 ));
-        roomList.add(new Room("0-1", "", 0,1 ));
-        roomList.add(new Room("1-0", "", 1,0 ));
-        roomList.add(new Room("1-1", "", 1,1 ));
-        roomList.add(new Room("2-2", "", 2,2 ));
+        addRoom(new Room("0-0", "", 0,0 ));
+        addRoom(new Room("0-1", "", 0,1 ));
+        addRoom(new Room("1-0", "", 1,0 ));
+        addRoom(new Room("1-1", "", 1,1 ));
+        addRoom(new Room("2-2", "", 2,2 ));
 
         MapEngine mapEngine = new MapEngine(roomList, 3,3);
     }
