@@ -4,19 +4,25 @@ import it.shifty.game.engine.exception.LoseGameException;
 import it.shifty.game.engine.exception.RoomMisplacedException;
 import it.shifty.game.engine.map.MapEngine;
 import it.shifty.game.engine.map.Room;
+import it.shifty.game.engine.parser.CommandParser;
 import it.shifty.game.gameobjects.Character;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
 
+    @Autowired
+    CommandParser parser;
+
+    private List<Room> roomList = new ArrayList<>();
+
     public Game() throws RoomMisplacedException {
         initializeGame();
     }
 
     private void initializeGame() throws RoomMisplacedException {
-        List<Room> roomList = new ArrayList<>();
         roomList.add(new Room("0-0", "", 0,0 ));
         roomList.add(new Room("0-1", "", 0,1 ));
         roomList.add(new Room("1-0", "", 1,0 ));
@@ -38,6 +44,11 @@ public class Game {
         }
     }
 
+    private void addRoom(Room room) {
+        roomList.add(room);
+        parser.addObjectName(room.getName());
+    }
+
     public void showIntro() {
 
     }
@@ -49,8 +60,8 @@ public class Game {
         if (lowerCaseString.isBlank())
             outcome = "Devi inserire un comando";
         else {
-            wordList = StringParser.wordList(lowerCaseString);
-            outcome = StringParser.parseCommand(wordList);
+            wordList = CommandParser.wordList(lowerCaseString);
+            outcome = CommandParser.parseCommand(wordList);
         }
         return outcome;
     }
