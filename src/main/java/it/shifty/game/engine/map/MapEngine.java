@@ -65,9 +65,9 @@ public class MapEngine {
         for (int x = 0; x < xSize; x++) {
             for (int y = 0; y < xSize; y++) {
                 if (!existsRoomInSpot(x,y))
-                    System.out.print("O");
+                    System.out.print(" ");
                 else
-                    System.out.print("R");
+                    System.out.print("X");
             }
             System.out.println("\r");
         }
