@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Asset implements DamageAbsorber  {
+public class Asset extends AbstractAsset implements DamageAbsorber  {
 
     private String name;
     private String description;
@@ -17,14 +17,14 @@ public class Asset implements DamageAbsorber  {
     private int health = 99999;
     private boolean canBeDestroyed = true;
 
-    public Asset(String name, String description) {
-        this.name = name;
-        this.description = description;
+    public Asset(String name, String description, int health) {
+        super(name,description);
+        this.health = health;
     }
 
-    public Asset(String name, String description, int health) {
-        this(name,description);
-        this.health = health;
+    public Asset(String name, String description, boolean canBeDestroyed) {
+        super(name, description);
+        this.canBeDestroyed = canBeDestroyed;
     }
 
     @Override

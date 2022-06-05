@@ -5,7 +5,6 @@ import it.shifty.game.gameobjects.Character;
 
 public class AdventureGame {
 
-
     public void manageDamage(Character attackingCharacter, Character defendingCharacter) throws LoseGameException {
         int firstDamage = attackingCharacter.getPrimaryWeapon() != null ? attackingCharacter.getPrimaryWeapon().getDamage() : 0;
         int secondDamage = attackingCharacter.getSecondaryWeapon() != null ? attackingCharacter.getPrimaryWeapon().getDamage() : 0;

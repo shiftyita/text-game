@@ -5,11 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="23cd1d09-8d80-4db3-9171-188568541b5d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/shifty/game/engine/MapEngine.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/shifty/game/engine/exception/RoomMisplacedException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/shifty/game/gameobjects/AbstractAsset.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/shifty/game/engine/AdventureGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/shifty/game/engine/AdventureGame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/shifty/game/gameobjects/Asset.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/shifty/game/gameobjects/Asset.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/shifty/game/gameobjects/Character.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/shifty/game/gameobjects/Character.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/shifty/game/gameobjects/Weapon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/shifty/game/gameobjects/Weapon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/shifty/game/gameobjects/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/shifty/game/gameobjects/Room.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +54,9 @@
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Sviluppo\ProgettiGit\text-game\text-game" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="it.shifty.game.engine.exception" />
     </key>
   </component>
   <component name="RunManager" selected="Application.ValueReference">
