@@ -10,9 +10,6 @@ import lombok.Setter;
 @Setter
 public class Asset extends AbstractAsset implements DamageAbsorber  {
 
-    private String name;
-    private String description;
-
     private boolean destroyed;
     private int health = 99999;
     private boolean canBeDestroyed = true;

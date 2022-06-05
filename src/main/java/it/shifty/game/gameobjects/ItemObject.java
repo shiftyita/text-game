@@ -7,15 +7,7 @@ import lombok.Setter;
 @Setter
 public class ItemObject extends Asset {
 
-    private int health;
-
-    public ItemObject(String name, String description, int health) {
-        super(name, description);
-        this.health =health;
-    }
-
     public ItemObject(String name, String description) {
-        super(name, description);
+        super(name, description, 100);
     }
-
 }
