@@ -5,36 +5,76 @@ import it.shifty.game.engine.exception.RoomMisplacedException;
 import it.shifty.game.engine.map.MapEngine;
 import it.shifty.game.engine.map.Room;
 import it.shifty.game.gameobjects.Character;
+import org.springframework.core.env.Environment;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AdventureGame {
 
-    public static void main(String[] args) throws RoomMisplacedException {
+    static Game game;
 
-        List<Room> roomList = new ArrayList<>();
-        roomList.add(new Room("0-0", "", 0,0 ));
-        roomList.add(new Room("0-1", "", 0,1 ));
-        roomList.add(new Room("1-0", "", 1,0 ));
-        roomList.add(new Room("1-1", "", 1,1 ));
-        roomList.add(new Room("2-2", "", 2,2 ));
+    private static String saveGameFilename = "game.sav";
 
-        MapEngine mapEngine = new MapEngine(roomList, 3,3);
+    private static Environment environment;
 
-        mapEngine.drawMap();
-    }
+    private static final String SAVE_COMMAND = "salva";
+    private static final String LOAD_COMMAND = "carica";
 
-    public void manageDamage(Character attackingCharacter, Character defendingCharacter) throws LoseGameException {
-        int firstDamage = attackingCharacter.getPrimaryWeapon() != null ? attackingCharacter.getPrimaryWeapon().getDamage() : 0;
-        int secondDamage = attackingCharacter.getSecondaryWeapon() != null ? attackingCharacter.getPrimaryWeapon().getDamage() : 0;
-        int damageTaken = defendingCharacter.getArmor().absorbDamage(firstDamage + secondDamage);
-        if (damageTaken > 0)
-        {
-            defendingCharacter.absorbDamage(damageTaken);
-            if (defendingCharacter.isDestroyed() && defendingCharacter.isMainCharacter())
-                throw new LoseGameException("You lose the game. Your character died");
+    private static final String EXIT_COMMAND = "esci";
+
+    private static void saveGame() {
+        try {
+            FileOutputStream fos = new FileOutputStream(saveGameFilename);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(game);
+            oos.flush();
+            oos.close();
+            System.out.print("Game saved\n");
+        } catch (Exception e) {
+            System.out.print("Serialization Error! Can't save data.\n"
+                    + e.getClass() + ": " + e.getMessage() + "\n");
         }
     }
 
+    private static void loadGame() {
+        try {
+            FileInputStream fis = new FileInputStream(saveGameFilename);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            game = (Game) ois.readObject();
+            ois.close();
+            System.out.print("\n---Game loaded---\n");
+        } catch (Exception e) {
+            System.out.print("Serialization Error! Can't load data.\n");
+            System.out.print(e.getClass() + ": " + e.getMessage() + "\n");
+        }
+    }
+
+    public static void main(String[] args) throws RoomMisplacedException, IOException {
+        BufferedReader in;
+        String input;
+        String output = "";
+        game = new Game();
+        in = new BufferedReader(new InputStreamReader(System.in));
+        game.showIntro();
+        do {
+            System.out.print("> ");
+            input = in.readLine().trim();
+            switch (input) {
+                case SAVE_COMMAND:
+                    saveGame();
+                    break;
+                case LOAD_COMMAND:
+                    loadGame();
+                    break;
+                default:
+                    output = game.executeCommand(input);
+                    break;
+            }
+            if (!output.trim().isEmpty()) {
+                game.showMessage(output);
+            }
+        } while (!EXIT_COMMAND.equals(input));
+    }
 }

@@ -1,6 +1,7 @@
 package it.shifty.game.engine.map;
 
 import it.shifty.game.engine.exception.RoomMisplacedException;
+import it.shifty.game.gameobjects.Character;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +17,15 @@ public class MapEngine {
         ySize = yGrid;
         placeRooms(rooms);
         calculateRoomSurroundigs();
+    }
+
+    public boolean moveCharacter(Character character, Room destRoom) {
+        if (character.getPosition().isSurroundedBy(destRoom)) {
+            character.setPosition(destRoom);
+            return true;
+        }
+        else
+            return false;
     }
 
     public void placeRooms(List<Room> rooms) throws RoomMisplacedException {
@@ -93,28 +103,32 @@ public class MapEngine {
                 eastRoom.ifPresent(existingRoom::setE);
                 westRoom.ifPresent(existingRoom::setW);
 
-                System.out.println("La stanza in coordinata (" + existingRoom.getX() + "," + existingRoom.getY()+")");
-                if (northRoom.isPresent())
-                    System.out.println("confina a Nord con " + northRoom.get().getName());
-                else
-                    System.out.println("confina a Nord con un muro");
-
-                if (southRoom.isPresent())
-                    System.out.println("confina a Sud con " + southRoom.get().getName());
-                else
-                    System.out.println("confina a Sud con un muro");
-
-                if (westRoom.isPresent())
-                    System.out.println("confina ad Ovest con " + westRoom.get().getName());
-                else
-                    System.out.println("confina ad Ovest con un muro");
-
-                if (eastRoom.isPresent())
-                    System.out.println("confina ad Est con " + eastRoom.get().getName());
-                else
-                    System.out.println("confina ad Est con un muro");
+//                logExtractedRoom(existingRoom, northRoom, southRoom, eastRoom, westRoom);
 
             }
         }
+    }
+
+    private void logExtractedRoom(Room existingRoom, Optional<Room> northRoom, Optional<Room> southRoom, Optional<Room> eastRoom, Optional<Room> westRoom) {
+        System.out.println("La stanza in coordinata (" + existingRoom.getX() + "," + existingRoom.getY()+")");
+        if (northRoom.isPresent())
+            System.out.println("confina a Nord con " + northRoom.get().getName());
+        else
+            System.out.println("confina a Nord con un muro");
+
+        if (southRoom.isPresent())
+            System.out.println("confina a Sud con " + southRoom.get().getName());
+        else
+            System.out.println("confina a Sud con un muro");
+
+        if (westRoom.isPresent())
+            System.out.println("confina ad Ovest con " + westRoom.get().getName());
+        else
+            System.out.println("confina ad Ovest con un muro");
+
+        if (eastRoom.isPresent())
+            System.out.println("confina ad Est con " + eastRoom.get().getName());
+        else
+            System.out.println("confina ad Est con un muro");
     }
 }

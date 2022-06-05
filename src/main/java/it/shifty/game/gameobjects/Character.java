@@ -1,5 +1,6 @@
 package it.shifty.game.gameobjects;
 
+import it.shifty.game.engine.map.Room;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,7 @@ public class Character extends Asset {
     private Weapon secondaryWeapon;
     private Armor armor;
     private boolean mainCharacter;
+    private Room position;
 
     public Character(String name, String description) {
         super(name,description, 100);
