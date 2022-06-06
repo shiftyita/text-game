@@ -92,7 +92,7 @@ public class Game {
             case GO_N:
                 return mapEngine.moveCharacter(character, Direction.NORTH);
             case GO_W:
-                return mapEngine.moveCharacter(character, Direction.NORTH);
+                return mapEngine.moveCharacter(character, Direction.WEST);
             case GO_S:
                 return mapEngine.moveCharacter(character, Direction.SOUTH);
             case INVENTORY:
