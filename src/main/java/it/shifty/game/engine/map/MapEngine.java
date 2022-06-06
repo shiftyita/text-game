@@ -19,13 +19,38 @@ public class MapEngine {
         calculateRoomSurroundigs();
     }
 
-    public boolean moveCharacter(Character character, Room destRoom) {
+    public String moveCharacter(Character character, Direction direction) {
+        Room currentRoom = character.getPosition();
+        switch (direction) {
+            case NORTH:
+                if (currentRoom.getN()!=null)
+                    return moveCharacterTo(character, currentRoom.getN());
+                break;
+            case SOUTH:
+                if (currentRoom.getS()!=null)
+                    return moveCharacterTo(character, currentRoom.getS());
+                break;
+            case WEST:
+                if (currentRoom.getW()!=null)
+                    return moveCharacterTo(character, currentRoom.getW());
+                break;
+            case EAST:
+                if (currentRoom.getE()!=null)
+                    return moveCharacterTo(character, currentRoom.getE());
+                break;
+            default:
+                return "Non posso andare lì";
+        }
+        return "";
+    }
+
+    private String moveCharacterTo(Character character, Room destRoom) {
         if (character.getPosition().isSurroundedBy(destRoom)) {
             character.setPosition(destRoom);
-            return true;
+            return character.describeRoom();
         }
         else
-            return false;
+            return "";
     }
 
     public void placeRooms(List<Room> rooms) throws RoomMisplacedException {
