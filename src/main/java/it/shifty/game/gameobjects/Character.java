@@ -4,6 +4,7 @@ import it.shifty.game.engine.map.Room;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -19,6 +20,7 @@ public class Character extends Asset {
 
     public Character(String name, String description) {
         super(name, description, 100);
+        this.inventory = new ArrayList<>();
     }
 
     public Character(String name, String description, boolean main, Room position) {

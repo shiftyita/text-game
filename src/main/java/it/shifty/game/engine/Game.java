@@ -32,11 +32,11 @@ public class Game {
 
     private void initializeGame() throws RoomMisplacedException {
         parser = new CommandParser();
-        addRoom(new Room("0-0", "", 0,0 ));
-        addRoom(new Room("0-1", "", 0,1 ));
-        addRoom(new Room("1-0", "", 1,0 ));
-        addRoom(new Room("1-1", "", 1,1 ));
-        addRoom(new Room("2-2", "", 2,2 ));
+        addRoom(new Room("0-0", "La stanza è piccola ed angusta. E' la stanza 0-0", 0,0 ));
+        addRoom(new Room("0-1", "La stanza è piccola ed angusta. E' la stanza 0-1", 0,1 ));
+        addRoom(new Room("1-0", "La stanza è piccola ed angusta. E' la stanza 1-0", 1,0 ));
+        addRoom(new Room("1-1", "La stanza è piccola ed angusta. E' la stanza 1-1", 1,1 ));
+        addRoom(new Room("2-2", "La stanza è piccola ed angusta. E' la stanza 2-2", 2,2 ));
 
         mapEngine = new MapEngine(roomList, 3,3);
         character = new Character("Player", "Lovely game-player", true, mapEngine.getRoom(0,0).get());
@@ -68,21 +68,20 @@ public class Game {
         String lowerCaseString = input.toLowerCase();
         String outcome;
         if (lowerCaseString.isBlank())
-            outcome = "Devi inserire un comando";
+            return "Devi inserire un comando";
         else {
             wordList = CommandParser.wordList(lowerCaseString);
             try {
                 //recognize the action
                 Actions actionCatched = Actions.fromString(wordList.get(0));
                 if (actionCatched.getOperation().equals(Operations.NONE)) {
-                    outcome = processSingleOperation(actionCatched);
+                    return processSingleOperation(actionCatched);
                 }
             } catch (Exception ex) {
-                outcome = "Scusa, non credo di aver capito";
+                return "Scusa, non credo di aver capito";
             }
-            outcome = CommandParser.parseCommand(wordList);
+            return CommandParser.parseCommand(wordList);
         }
-        return outcome;
     }
 
     public String processSingleOperation(Actions action) {
@@ -100,11 +99,11 @@ public class Game {
             case LOOK:
                 return character.describeRoom();
             default:
-                break;
+                return "";
         }
-        return "";
     }
 
     public void showMessage(String output) {
+        System.out.println(output);
     }
 }

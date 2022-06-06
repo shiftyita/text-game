@@ -39,18 +39,14 @@ public class MapEngine {
                     return moveCharacterTo(character, currentRoom.getE());
                 break;
             default:
-                return "Non posso andare lì";
+                return "Non capisco dove andare";
         }
-        return "";
+        return "Non posso andarci.";
     }
 
     private String moveCharacterTo(Character character, Room destRoom) {
-        if (character.getPosition().isSurroundedBy(destRoom)) {
-            character.setPosition(destRoom);
-            return character.describeRoom();
-        }
-        else
-            return "";
+        character.setPosition(destRoom);
+        return character.describeRoom();
     }
 
     public void placeRooms(List<Room> rooms) throws RoomMisplacedException {

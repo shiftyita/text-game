@@ -6,7 +6,7 @@ import java.util.List;
 public enum Actions {
 
     PUT("metti"), TAKE("prendi"), DROP("lascia"), OPEN("apri"), CLOSE("chiudi"), LOOK("guarda"),
-    PULL("tira"), PUSH("spingi"), INVENTORY("inventario"), GO_N ("n"), GO_S("s"), GO_E("e"), GO_W("w"),
+    PULL("tira"), PUSH("spingi"), INVENTORY("inventario"), GO_N ("nord"), GO_S("sud"), GO_E("est"), GO_W("ovest"),
     UNRECOGNIZED("comando non riconosciuto");
 
     private String actionName;

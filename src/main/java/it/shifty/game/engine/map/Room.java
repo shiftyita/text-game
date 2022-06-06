@@ -41,8 +41,4 @@ public class Room extends Asset {
         this.e = e;
     }
 
-    boolean isSurroundedBy(Room room) {
-        return n.equals(room) || s.equals(room) || e.equals(room) || w.equals(room);
-    }
-
 }
