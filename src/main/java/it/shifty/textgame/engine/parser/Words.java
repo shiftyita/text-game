@@ -1,7 +1,6 @@
-package it.shifty.game.engine.parser;
+package it.shifty.textgame.engine.parser;
 
 public enum Words {
-
     NOUN, VERB, PREPOSITION, ARTICLE
 
 }

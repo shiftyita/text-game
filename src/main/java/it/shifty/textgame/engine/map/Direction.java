@@ -1,4 +1,4 @@
-package it.shifty.game.engine.map;
+package it.shifty.textgame.engine.map;
 
 public enum Direction {
     NORTH,

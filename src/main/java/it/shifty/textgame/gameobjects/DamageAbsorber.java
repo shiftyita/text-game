@@ -1,4 +1,4 @@
-package it.shifty.game.gameobjects;
+package it.shifty.textgame.gameobjects;
 
 public interface DamageAbsorber {
 

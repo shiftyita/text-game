@@ -1,7 +1,8 @@
-package it.shifty.game.engine.map;
+package it.shifty.textgame.engine.map;
 
-import it.shifty.game.engine.exception.RoomMisplacedException;
-import it.shifty.game.gameobjects.Character;
+import it.shifty.textgame.engine.display.OutputMessage;
+import it.shifty.textgame.engine.exception.RoomMisplacedException;
+import it.shifty.textgame.gameobjects.Character;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +20,7 @@ public class MapEngine {
         calculateRoomSurroundigs();
     }
 
-    public String moveCharacter(Character character, Direction direction) {
+    public OutputMessage moveCharacter(Character character, Direction direction) {
         Room currentRoom = character.getPosition();
         switch (direction) {
             case NORTH:
@@ -39,12 +40,12 @@ public class MapEngine {
                     return moveCharacterTo(character, currentRoom.getE());
                 break;
             default:
-                return "Non capisco dove andare";
+                return new OutputMessage("character.mapengine.donot.understand");
         }
-        return "Non posso andarci.";
+        return new OutputMessage("character.mapengine.cannot.go");
     }
 
-    private String moveCharacterTo(Character character, Room destRoom) {
+    private OutputMessage moveCharacterTo(Character character, Room destRoom) {
         character.setPosition(destRoom);
         return character.describeRoom();
     }

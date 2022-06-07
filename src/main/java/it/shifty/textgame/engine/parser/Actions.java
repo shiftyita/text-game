@@ -1,4 +1,4 @@
-package it.shifty.game.engine.parser;
+package it.shifty.textgame.engine.parser;
 
 import java.util.ArrayList;
 import java.util.List;

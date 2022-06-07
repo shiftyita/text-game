@@ -1,8 +1,6 @@
-package it.shifty.game.gameobjects;
+package it.shifty.textgame.gameobjects;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

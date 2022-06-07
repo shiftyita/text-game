@@ -1,17 +1,15 @@
-package it.shifty.game.engine.parser;
+package it.shifty.textgame.engine.parser;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import static it.shifty.game.engine.parser.Actions.*;
-import static it.shifty.game.engine.parser.Actions.LOOK;
+import static it.shifty.textgame.engine.parser.Actions.*;
+import static it.shifty.textgame.engine.parser.Actions.LOOK;
 
 public class CommandParser {
 
@@ -32,8 +30,6 @@ public class CommandParser {
         INVENTORY.addOperation(Operations.NONE);
         LOOK.addOperation(Operations.NONE);
     }
-
-
 
 
     public static List<String> wordList(String lowerCaseString) {

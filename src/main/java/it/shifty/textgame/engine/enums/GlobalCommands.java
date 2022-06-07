@@ -1,6 +1,4 @@
-package it.shifty.game.engine;
-
-import org.springframework.core.env.Environment;
+package it.shifty.textgame.engine.enums;
 
 public enum GlobalCommands {
     SAVE("SALVA"), LOAD("CARICA"), EXIT ("ESCI");

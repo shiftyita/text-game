@@ -1,4 +1,4 @@
-package it.shifty.game.engine.exception;
+package it.shifty.textgame.engine.exception;
 
 public class RoomMisplacedException extends Throwable {
 
