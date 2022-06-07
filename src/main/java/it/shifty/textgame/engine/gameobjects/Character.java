@@ -1,4 +1,4 @@
-package it.shifty.textgame.gameobjects;
+package it.shifty.textgame.engine.gameobjects;
 
 import it.shifty.textgame.engine.display.OutputMessage;
 import it.shifty.textgame.engine.map.Room;
@@ -18,15 +18,16 @@ public class Character extends Asset {
     private Armor armor;
     private boolean mainCharacter;
     private Room position;
+    private ItemObject holdenItem;
 
     public Character(String name, String description) {
         super(name, description, 100);
         this.inventory = new ArrayList<>();
     }
 
-    public Character(String name, String description, boolean main, Room position) {
+    public Character(String name, String description, boolean mainCharacter, Room position) {
         this(name, description);
-        this.mainCharacter = main;
+        this.mainCharacter = mainCharacter;
         this.position = position;
     }
 

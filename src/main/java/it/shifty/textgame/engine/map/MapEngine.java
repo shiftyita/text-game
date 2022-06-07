@@ -2,7 +2,7 @@ package it.shifty.textgame.engine.map;
 
 import it.shifty.textgame.engine.display.OutputMessage;
 import it.shifty.textgame.engine.exception.RoomMisplacedException;
-import it.shifty.textgame.gameobjects.Character;
+import it.shifty.textgame.engine.gameobjects.Character;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,8 +46,23 @@ public class MapEngine {
     }
 
     private OutputMessage moveCharacterTo(Character character, Room destRoom) {
-        character.setPosition(destRoom);
-        return character.describeRoom();
+        OutputMessage message = new OutputMessage();
+        boolean canMove = false;
+        String msg = "";
+        if (destRoom instanceof ClosedRoom) {
+            if (character.getHoldenItem() instanceof Key) {
+                if (((ClosedRoom) destRoom).canBeOpen((Key) character.getHoldenItem()))
+                    canMove = true;
+                message.addMessage(((ClosedRoom) destRoom).open((Key) character.getHoldenItem()));
+            } else {
+                message.addMessage("items.key.door.need");
+            }
+        }
+        if (canMove) {
+            character.setPosition(destRoom);
+            message.addMessage(character.describeRoom().getMessage());
+        }
+        return message;
     }
 
     public void placeRooms(List<Room> rooms) throws RoomMisplacedException {

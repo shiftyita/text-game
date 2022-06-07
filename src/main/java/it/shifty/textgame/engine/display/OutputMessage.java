@@ -2,6 +2,7 @@ package it.shifty.textgame.engine.display;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -11,16 +12,22 @@ public class OutputMessage {
 
     private String message;
 
-    private boolean isGameMessage;
+    private boolean isGameMessage = true;
+
+    public OutputMessage() {
+        this.multiMessage = new ArrayList<>();
+    }
 
     public OutputMessage(List<String> multiMessage) {
-        this.multiMessage =multiMessage;
-        this.isGameMessage = true;
+        this.multiMessage = multiMessage;
+    }
+
+    public void addMessage(String message) {
+        multiMessage.add(message);
     }
 
     public OutputMessage(String message) {
         this.message = message;
-        this.isGameMessage = true;
     }
 
     public OutputMessage(String message, boolean isGameMessage) {

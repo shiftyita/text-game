@@ -1,7 +1,7 @@
 package it.shifty.textgame.engine.map;
 
 
-import it.shifty.textgame.gameobjects.Asset;
+import it.shifty.textgame.engine.gameobjects.Asset;
 import lombok.Getter;
 import lombok.Setter;
 
