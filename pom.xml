@@ -54,7 +54,7 @@
                         <releaseBranchPrefix>release/</releaseBranchPrefix>
                         <hotfixBranchPrefix>hotfix/</hotfixBranchPrefix>
                         <supportBranchPrefix>support/</supportBranchPrefix>
-                        <versionTagPrefix>${artifactId}-</versionTagPrefix>
+                        <versionTagPrefix>${project.artifactId}-</versionTagPrefix>
                         <origin>origin</origin>
                     </gitFlowConfig>
                 </configuration>
