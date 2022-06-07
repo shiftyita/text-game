@@ -1,5 +1,6 @@
 package it.shifty.game.gameobjects;
 
+import it.shifty.game.engine.display.OutputMessage;
 import it.shifty.game.engine.map.Room;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,21 +30,21 @@ public class Character extends Asset {
         this.position = position;
     }
 
-    public String describeRoom() {
-        return position.getDescription();
+    public OutputMessage describeRoom() {
+        return new OutputMessage(position.getDescription());
     }
 
-    public String describeInventory() {
-        String message;
+    public OutputMessage describeInventory() {
+        List<String> output = new ArrayList<>();
         if (inventory.isEmpty()) {
-            message = "Il mio inventario è vuoto.";
-            return message;
+            output.add("character.inventory.empty");
+            return new OutputMessage(output);
         }
-        message = "Ecco cosa contiene il mio zaino:\n";
+        output.add("Ecco cosa contiene il mio zaino:");
         for (ItemObject item : inventory) {
-            message+= item.getDescription()+"\n";
+            output.add(item.getDescription());
         }
-        return message;
+        return new OutputMessage(output);
     }
 
 

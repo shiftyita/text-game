@@ -1,5 +1,7 @@
 package it.shifty.game.engine;
 
+import it.shifty.game.engine.display.DisplayOutput;
+import it.shifty.game.engine.display.OutputMessage;
 import it.shifty.game.engine.exception.LoseGameException;
 import it.shifty.game.engine.exception.RoomMisplacedException;
 import it.shifty.game.engine.map.Direction;
@@ -9,10 +11,13 @@ import it.shifty.game.engine.parser.Actions;
 import it.shifty.game.engine.parser.CommandParser;
 import it.shifty.game.engine.parser.Operations;
 import it.shifty.game.gameobjects.Character;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static it.shifty.game.engine.parser.Actions.UNRECOGNIZED;
 
@@ -26,20 +31,29 @@ public class Game {
 
     private Character character;
 
-    public Game() throws RoomMisplacedException {
-        initializeGame();
+    private DisplayOutput displayOutput;
+
+    private static final Logger LOGGER = Logger.getLogger( Game.class.getName() );
+
+    public Game(DisplayOutput displayOutput) {
+        try {
+            initializeGame();
+            this.displayOutput = displayOutput;
+        } catch (Exception | RoomMisplacedException ex) {
+            LOGGER.log(Level.SEVERE, ex.toString());
+        }
     }
 
     private void initializeGame() throws RoomMisplacedException {
-        parser = new CommandParser();
-        addRoom(new Room("0-0", "La stanza è piccola ed angusta. E' la stanza 0-0", 0,0 ));
-        addRoom(new Room("0-1", "La stanza è piccola ed angusta. E' la stanza 0-1", 0,1 ));
-        addRoom(new Room("1-0", "La stanza è piccola ed angusta. E' la stanza 1-0", 1,0 ));
-        addRoom(new Room("1-1", "La stanza è piccola ed angusta. E' la stanza 1-1", 1,1 ));
-        addRoom(new Room("2-2", "La stanza è piccola ed angusta. E' la stanza 2-2", 2,2 ));
+            parser = new CommandParser();
+            addRoom(new Room("0-0", "room.description.standard", 0,0 ));
+            addRoom(new Room("0-1", "room.description.standard", 0,1 ));
+            addRoom(new Room("1-0", "room.description.standard", 1,0 ));
+            addRoom(new Room("1-1", "room.description.standard", 1,1 ));
+            addRoom(new Room("2-2", "room.description.standard", 2,2 ));
 
-        mapEngine = new MapEngine(roomList, 3,3);
-        character = new Character("Player", "Lovely game-player", true, mapEngine.getRoom(0,0).get());
+            mapEngine = new MapEngine(roomList, 3,3);
+            character = new Character("Player", "Lovely game-player", true, mapEngine.getRoom(0,0).get());
     }
 
     private void manageDamage(Character attackingCharacter, Character defendingCharacter) throws LoseGameException {
@@ -63,12 +77,12 @@ public class Game {
 
     }
 
-    public String executeCommand(String input) {
+    public OutputMessage executeCommand(String input) {
         List<String> wordList;
         String lowerCaseString = input.toLowerCase();
         String outcome;
         if (lowerCaseString.isBlank())
-            return "Devi inserire un comando";
+            return new OutputMessage("default.message.command.missing");
         else {
             wordList = CommandParser.wordList(lowerCaseString);
             try {
@@ -78,13 +92,13 @@ public class Game {
                     return processSingleOperation(actionCatched);
                 }
             } catch (Exception ex) {
-                return "Scusa, non credo di aver capito";
+                return new OutputMessage("default.message.not.understand");
             }
-            return CommandParser.parseCommand(wordList);
+            return new OutputMessage(CommandParser.parseCommand(wordList));
         }
     }
 
-    public String processSingleOperation(Actions action) {
+    public OutputMessage processSingleOperation(Actions action) {
         switch (action) {
             case GO_E:
                 return mapEngine.moveCharacter(character, Direction.EAST);
@@ -99,11 +113,11 @@ public class Game {
             case LOOK:
                 return character.describeRoom();
             default:
-                return "";
+                return new OutputMessage("");
         }
     }
 
-    public void showMessage(String output) {
-        System.out.println(output);
+    public void showMessage(OutputMessage output) {
+        displayOutput.printTextOutput(output);
     }
 }

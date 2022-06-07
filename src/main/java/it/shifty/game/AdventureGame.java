@@ -1,6 +1,7 @@
 package it.shifty.game;
 
 import it.shifty.game.engine.Game;
+import it.shifty.game.engine.display.OutputMessage;
 import it.shifty.game.engine.exception.LoseGameException;
 import it.shifty.game.engine.exception.RoomMisplacedException;
 import it.shifty.game.engine.map.MapEngine;
@@ -18,10 +19,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "it.shifty.game")
 public class AdventureGame implements CommandLineRunner {
 
-    static Game game;
+    private static Game game;
+
+    public AdventureGame(Game game) {
+        this.game = game;
+    }
 
     private static String saveGameFilename = "game.sav";
 
@@ -64,8 +68,7 @@ public class AdventureGame implements CommandLineRunner {
         try {
             BufferedReader in;
             String input;
-            String output = "";
-            game = new Game();
+            OutputMessage output = new OutputMessage("");
             in = new BufferedReader(new InputStreamReader(System.in));
             game.showIntro();
             do {
@@ -82,13 +85,11 @@ public class AdventureGame implements CommandLineRunner {
                         output = game.executeCommand(input);
                         break;
                 }
-                if (!output.trim().isEmpty()) {
+                if (output.getMessage() != "") {
                     game.showMessage(output);
                 }
             } while (!EXIT_COMMAND.equals(input));
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (RoomMisplacedException e) {
             throw new RuntimeException(e);
         }
     }

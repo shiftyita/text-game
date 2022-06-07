@@ -1,5 +1,6 @@
 package it.shifty.game.engine.parser;
 
+import it.shifty.game.engine.display.OutputMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -32,8 +33,6 @@ public class CommandParser {
         INVENTORY.addOperation(Operations.NONE);
         LOOK.addOperation(Operations.NONE);
     }
-
-
 
 
     public static List<String> wordList(String lowerCaseString) {
