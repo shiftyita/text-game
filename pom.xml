@@ -17,6 +17,9 @@
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <spring.core.version>5.3.20</spring.core.version>
+        <lombok.version>1.18.24</lombok.version>
+        <gitflow.maven.plugin.version>1.18.0</gitflow.maven.plugin.version>
     </properties>
 
     <dependencies>
@@ -27,12 +30,12 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>5.3.20</version>
+            <version>${spring.core.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.24</version>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -42,7 +45,7 @@
             <plugin>
                 <groupId>com.amashchenko.maven.plugin</groupId>
                 <artifactId>gitflow-maven-plugin</artifactId>
-                <version>1.18.0</version>
+                <version>${gitflow.maven.plugin.version}</version>
                 <configuration>
                     <gitFlowConfig>
                         <productionBranch>main</productionBranch>
