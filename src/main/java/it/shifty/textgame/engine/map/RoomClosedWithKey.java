@@ -26,10 +26,8 @@ public class RoomClosedWithKey extends Room {
 
     public boolean canBeOpen(Key someKey) {
         if (isClosed) {
-            if (keysThatOpensRoom.contains(someKey)) {
-                isClosed = false;
+            if (keysThatOpensRoom.contains(someKey))
                 return true;
-            }
             return false;
         } else {
             return true;

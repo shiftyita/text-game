@@ -54,6 +54,7 @@ public class Game {
 
         mapEngine = new MapEngine(roomList, 3, 3);
         character = new Character("Player", "Lovely game-player", true, mapEngine.getRoom(0, 0).get());
+        character.setHoldenItem(universalKey);
     }
 
     private void manageDamage(Character attackingCharacter, Character defendingCharacter) throws LoseGameException {
