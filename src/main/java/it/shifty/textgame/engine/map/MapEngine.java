@@ -49,11 +49,11 @@ public class MapEngine {
         OutputMessage message = new OutputMessage();
         boolean canMove = false;
         String msg = "";
-        if (destRoom instanceof ClosedRoom) {
+        if (destRoom instanceof RoomClosedWithKey) {
             if (character.getHoldenItem() instanceof Key) {
-                if (((ClosedRoom) destRoom).canBeOpen((Key) character.getHoldenItem()))
+                if (((RoomClosedWithKey) destRoom).canBeOpen((Key) character.getHoldenItem()))
                     canMove = true;
-                message.addMessage(((ClosedRoom) destRoom).open((Key) character.getHoldenItem()));
+                message.addMessage(((RoomClosedWithKey) destRoom).open((Key) character.getHoldenItem()));
             } else {
                 message.addMessage("items.key.door.need");
             }

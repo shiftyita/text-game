@@ -46,11 +46,11 @@ public class Game {
 //            addRoom(new Room("1-1", "room.description.standard", 1,1 ));
 //            addRoom(new Room("2-2", "room.description.standard", 2,2 ));
         Key universalKey = new Key("bella chiave", "key");
-        addRoom(new ClosedRoom("0-0", "room.description.standard", 0, 0, universalKey));
-        addRoom(new ClosedRoom("0-1", "room.description.standard", 0, 1, universalKey));
-        addRoom(new ClosedRoom("1-0", "room.description.standard", 1, 0, universalKey));
-        addRoom(new ClosedRoom("1-1", "room.description.standard", 1, 1, universalKey));
-        addRoom(new ClosedRoom("2-2", "room.description.standard", 2, 2, universalKey));
+        addRoom(new RoomClosedWithKey("0-0", "room.description.standard", 0, 0, universalKey));
+        addRoom(new RoomClosedWithKey("0-1", "room.description.standard", 0, 1, universalKey));
+        addRoom(new RoomClosedWithKey("1-0", "room.description.standard", 1, 0, universalKey));
+        addRoom(new RoomClosedWithKey("1-1", "room.description.standard", 1, 1, universalKey));
+        addRoom(new RoomClosedWithKey("2-2", "room.description.standard", 2, 2, universalKey));
 
         mapEngine = new MapEngine(roomList, 3, 3);
         character = new Character("Player", "Lovely game-player", true, mapEngine.getRoom(0, 0).get());

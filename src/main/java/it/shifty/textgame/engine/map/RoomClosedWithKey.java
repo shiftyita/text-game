@@ -8,18 +8,18 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ClosedRoom extends Room {
+public class RoomClosedWithKey extends Room {
 
     private boolean isClosed = true;
 
     private List<Key> keysThatOpensRoom = new ArrayList<>();
 
-    public ClosedRoom(String roomName, String roomDescription, Key keyThatOpensRoom) {
+    public RoomClosedWithKey(String roomName, String roomDescription, Key keyThatOpensRoom) {
         super(roomName, roomDescription);
         this.keysThatOpensRoom.add(keyThatOpensRoom);
     }
 
-    public ClosedRoom(String roomName, String roomDescription, int posX, int posY, Key keyThatOpensRoom) {
+    public RoomClosedWithKey(String roomName, String roomDescription, int posX, int posY, Key keyThatOpensRoom) {
         super(roomName, roomDescription, posX, posY);
         this.keysThatOpensRoom.add(keyThatOpensRoom);
     }
