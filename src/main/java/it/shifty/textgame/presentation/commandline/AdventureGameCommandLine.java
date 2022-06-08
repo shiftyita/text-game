@@ -6,7 +6,6 @@ import it.shifty.textgame.presentation.MenuGameLayout;
 import it.shifty.textgame.presentation.commandline.engine.parser.CommandParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 
 import java.io.*;
@@ -21,8 +20,6 @@ public class AdventureGameCommandLine implements CommandLineRunner, MenuGameLayo
     }
 
     private static String saveGameFilename = "game.sav";
-
-    private static Environment environment;
 
     private static final String SAVE_COMMAND = "salva";
     private static final String LOAD_COMMAND = "carica";
