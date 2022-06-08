@@ -7,7 +7,6 @@ import it.shifty.textgame.engine.gameobjects.Character;
 import it.shifty.textgame.engine.gameobjects.ItemObject;
 import it.shifty.textgame.engine.map.*;
 import it.shifty.textgame.presentation.GameEngineLayout;
-import it.shifty.textgame.presentation.commandline.engine.parser.CommandParser;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,8 +17,6 @@ import java.util.logging.Logger;
 @Service
 public class GameService implements GameEngineLayout {
 
-    CommandParser parser;
-
     private List<Room> roomList = new ArrayList<>();
 
     private MapEngine mapEngine;
@@ -29,29 +26,30 @@ public class GameService implements GameEngineLayout {
     private static final Logger LOGGER = Logger.getLogger(GameService.class.getName());
 
     public GameService() {
-        try {
-            initializeGame();
-        } catch (Exception | RoomMisplacedException ex) {
-            LOGGER.log(Level.SEVERE, ex.toString());
-        }
+        initializeGame();
     }
 
-    private void initializeGame() throws RoomMisplacedException {
-//            addRoom(new Room("0-0", "room.description.standard", 0,0 ));
+    @Override
+    public void initializeGame() {
+        try {
+            //            addRoom(new Room("0-0", "room.description.standard", 0,0 ));
 //            addRoom(new Room("0-1", "room.description.standard", 0,1 ));
 //            addRoom(new Room("1-0", "room.description.standard", 1,0 ));
 //            addRoom(new Room("1-1", "room.description.standard", 1,1 ));
 //            addRoom(new Room("2-2", "room.description.standard", 2,2 ));
-        Key universalKey = new Key("bella chiave", "key");
-        addRoom(new RoomClosedWithKey("0-0", "room.description.standard", 0, 0, universalKey));
-        addRoom(new RoomClosedWithKey("0-1", "room.description.standard", 0, 1, universalKey));
-        addRoom(new RoomClosedWithKey("1-0", "room.description.standard", 1, 0, universalKey));
-        addRoom(new RoomClosedWithKey("1-1", "room.description.standard", 1, 1, universalKey));
-        addRoom(new RoomClosedWithKey("2-2", "room.description.standard", 2, 2, universalKey));
+            Key universalKey = new Key("bella chiave", "key");
+            addRoom(new RoomClosedWithKey("0-0", "room.description.standard", 0, 0, universalKey));
+            addRoom(new RoomClosedWithKey("0-1", "room.description.standard", 0, 1, universalKey));
+            addRoom(new RoomClosedWithKey("1-0", "room.description.standard", 1, 0, universalKey));
+            addRoom(new RoomClosedWithKey("1-1", "room.description.standard", 1, 1, universalKey));
+            addRoom(new RoomClosedWithKey("2-2", "room.description.standard", 2, 2, universalKey));
 
-        mapEngine = new MapEngine(roomList, 3, 3);
-        character = new Character("Player", "Lovely game-player", true, mapEngine.getRoom(0, 0).get());
-        character.setHoldenItem(universalKey);
+            mapEngine = new MapEngine(roomList, 3, 3);
+            character = new Character("Player", "Lovely game-player", true, mapEngine.getRoom(0, 0).get());
+            character.setHoldenItem(universalKey);
+        } catch (Exception | RoomMisplacedException ex) {
+            LOGGER.log(Level.SEVERE, "Exception while initializing game : " + ex);
+        }
     }
 
     private void manageDamage(Character attackingCharacter, Character defendingCharacter) throws LoseGameException {
@@ -71,8 +69,8 @@ public class GameService implements GameEngineLayout {
 //        parser.addObjectName(room.getName());
     }
 
-    public void showIntro() {
-
+    public OutputMessage showIntro() {
+        return new OutputMessage("game.intro");
     }
 
     @Override

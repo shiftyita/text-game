@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface GameEngineLayout {
 
+    void initializeGame();
+
     OutputMessage moveCharacter(Direction direction);
 
     OutputMessage describeInventory();

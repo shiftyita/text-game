@@ -73,7 +73,7 @@ public class AdventureGameCommandLine implements CommandLineRunner, MenuGameLayo
             String input;
             OutputMessage output = new OutputMessage("");
             in = new BufferedReader(new InputStreamReader(System.in));
-            gameService.showIntro();
+            commandParser.showMessage(gameService.showIntro());
             do {
                 System.out.print("> ");
                 input = in.readLine().trim();

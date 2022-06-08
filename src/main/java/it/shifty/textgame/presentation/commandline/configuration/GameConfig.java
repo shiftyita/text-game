@@ -22,6 +22,7 @@ public class GameConfig {
         return new GameService();
     }
 
+    @Bean
     public CommandParser commandParser(DisplayOutput displayOutput) {
         return new CommandParser(displayOutput);
     }
