@@ -1,6 +1,6 @@
 package it.shifty.textgame.engine;
 
-import it.shifty.textgame.engine.display.OutputMessage;
+import it.shifty.textgame.engine.display.GameOutputMessage;
 import it.shifty.textgame.engine.exception.LoseGameException;
 import it.shifty.textgame.engine.exception.RoomMisplacedException;
 import it.shifty.textgame.engine.gameobjects.Character;
@@ -69,17 +69,17 @@ public class GameService implements GameEngineLayout {
 //        parser.addObjectName(room.getName());
     }
 
-    public OutputMessage showIntro() {
-        return new OutputMessage("game.intro");
+    public GameOutputMessage showIntro() {
+        return new GameOutputMessage("game.intro");
     }
 
     @Override
-    public OutputMessage moveCharacter(Direction direction) {
+    public GameOutputMessage moveCharacter(Direction direction) {
         return mapEngine.moveCharacter(character, direction);
     }
 
     @Override
-    public OutputMessage describeInventory() {
+    public GameOutputMessage describeInventory() {
         return character.describeInventory();
     }
 
@@ -89,7 +89,7 @@ public class GameService implements GameEngineLayout {
     }
 
     @Override
-    public OutputMessage describeRoom() {
+    public GameOutputMessage describeRoom() {
         return character.describeRoom();
     }
 }

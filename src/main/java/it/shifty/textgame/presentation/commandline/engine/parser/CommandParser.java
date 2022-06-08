@@ -1,9 +1,9 @@
 package it.shifty.textgame.presentation.commandline.engine.parser;
 
 import it.shifty.textgame.engine.GameService;
-import it.shifty.textgame.engine.display.DisplayOutput;
-import it.shifty.textgame.engine.display.OutputMessage;
+import it.shifty.textgame.engine.display.GameOutputMessage;
 import it.shifty.textgame.engine.map.Direction;
+import it.shifty.textgame.presentation.DisplayOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 
@@ -56,12 +56,12 @@ public class CommandParser {
         vocab.put(name, Words.NOUN);
     }
 
-    public OutputMessage executeCommand(String input) {
+    public GameOutputMessage executeCommand(String input) {
         List<String> wordList;
         String lowerCaseString = input.toLowerCase();
         String outcome;
         if (lowerCaseString.isBlank())
-            return new OutputMessage("default.message.command.missing");
+            return new GameOutputMessage("default.message.command.missing");
         else {
             wordList = CommandParser.wordList(lowerCaseString);
             try {
@@ -71,13 +71,13 @@ public class CommandParser {
                     return processSingleOperation(actionCatched);
                 }
             } catch (Exception ex) {
-                return new OutputMessage("default.message.not.understand");
+                return new GameOutputMessage("default.message.not.understand");
             }
-            return new OutputMessage(CommandParser.parseCommand(wordList));
+            return new GameOutputMessage(CommandParser.parseCommand(wordList));
         }
     }
 
-    public OutputMessage processSingleOperation(Actions action) {
+    public GameOutputMessage processSingleOperation(Actions action) {
         switch (action) {
             case GO_E:
                 return gameService.moveCharacter(Direction.EAST);
@@ -92,11 +92,11 @@ public class CommandParser {
             case LOOK:
                 return gameService.describeRoom();
             default:
-                return new OutputMessage("");
+                return new GameOutputMessage("text.blank");
         }
     }
 
-    public void showMessage(OutputMessage output) {
+    public void showMessage(GameOutputMessage output) {
         displayOutput.printTextOutput(output);
     }
 }

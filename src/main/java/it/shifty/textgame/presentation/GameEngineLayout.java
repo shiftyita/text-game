@@ -1,6 +1,6 @@
 package it.shifty.textgame.presentation;
 
-import it.shifty.textgame.engine.display.OutputMessage;
+import it.shifty.textgame.engine.display.GameOutputMessage;
 import it.shifty.textgame.engine.gameobjects.ItemObject;
 import it.shifty.textgame.engine.map.Direction;
 
@@ -10,12 +10,12 @@ public interface GameEngineLayout {
 
     void initializeGame();
 
-    OutputMessage moveCharacter(Direction direction);
+    GameOutputMessage moveCharacter(Direction direction);
 
-    OutputMessage describeInventory();
+    GameOutputMessage describeInventory();
 
     List<ItemObject> showInventory();
 
-    OutputMessage describeRoom();
+    GameOutputMessage describeRoom();
 
 }

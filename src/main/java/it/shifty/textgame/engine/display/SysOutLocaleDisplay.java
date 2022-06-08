@@ -1,30 +1,20 @@
 package it.shifty.textgame.engine.display;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
+import it.shifty.textgame.presentation.DisplayOutput;
 
 public class SysOutLocaleDisplay implements DisplayOutput {
 
-    ResourceBundle localizationEngine;
-
-    public SysOutLocaleDisplay(final Locale locale) {
-        localizationEngine = ResourceBundle.getBundle("language/text", locale);
-    }
-
     @Override
     public void printTextOutput(OutputMessage message) {
-        if (!message.isGameMessage()) //if it's a system message, no localization possible
-            System.out.println(message.getMessage());
-        else
-        {
+        if (message instanceof GameOutputMessage) { //if it's a game message, it's localized
             if (message.getMessage() != null) {
-                System.out.println(localizationEngine.getString(message.getMessage()));
-            }
-            else {
+                System.out.println(message.getMessage());
+            } else {
                 for (String text : message.getMultiMessage()) {
-                    System.out.println(localizationEngine.getString(text));
+                    System.out.println(text);
                 }
             }
-        }
+        } else
+            System.out.println(message.getMessage());
     }
 }
