@@ -2,7 +2,7 @@ package it.shifty.textgame.presentation.commandline;
 
 import it.shifty.textgame.engine.Game;
 import it.shifty.textgame.engine.display.OutputMessage;
-import it.shifty.textgame.presentation.AdventureGameLayout;
+import it.shifty.textgame.presentation.MenuGameLayout;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import java.io.*;
 
 @Controller
-public class AdventureGameCommandLine implements CommandLineRunner, AdventureGameLayout {
+public class AdventureGameCommandLine implements CommandLineRunner, MenuGameLayout {
 
     private Game game;
 
@@ -57,6 +57,11 @@ public class AdventureGameCommandLine implements CommandLineRunner, AdventureGam
     }
 
     @Override
+    public void exit() {
+        System.exit(1);
+    }
+
+    @Override
     public void execute(Game game) {
         try {
             BufferedReader in;
@@ -82,6 +87,7 @@ public class AdventureGameCommandLine implements CommandLineRunner, AdventureGam
                     game.showMessage(output);
                 }
             } while (!EXIT_COMMAND.equals(input));
+            exit();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

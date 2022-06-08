@@ -1,4 +1,4 @@
-package it.shifty.textgame.engine.parser;
+package it.shifty.textgame.presentation.commandline.engine.parser;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -8,8 +8,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import static it.shifty.textgame.engine.parser.Actions.*;
-import static it.shifty.textgame.engine.parser.Actions.LOOK;
+import static it.shifty.textgame.presentation.commandline.engine.parser.Actions.*;
 
 public class CommandParser {
 

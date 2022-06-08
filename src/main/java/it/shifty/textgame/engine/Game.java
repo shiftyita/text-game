@@ -6,9 +6,9 @@ import it.shifty.textgame.engine.exception.LoseGameException;
 import it.shifty.textgame.engine.exception.RoomMisplacedException;
 import it.shifty.textgame.engine.gameobjects.Character;
 import it.shifty.textgame.engine.map.*;
-import it.shifty.textgame.engine.parser.Actions;
-import it.shifty.textgame.engine.parser.CommandParser;
-import it.shifty.textgame.engine.parser.Operations;
+import it.shifty.textgame.presentation.commandline.engine.parser.Actions;
+import it.shifty.textgame.presentation.commandline.engine.parser.CommandParser;
+import it.shifty.textgame.presentation.commandline.engine.parser.Operations;
 
 import java.util.ArrayList;
 import java.util.List;
