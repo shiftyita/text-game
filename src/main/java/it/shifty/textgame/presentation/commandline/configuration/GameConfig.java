@@ -1,4 +1,4 @@
-package it.shifty.textgame.engine.configuration;
+package it.shifty.textgame.presentation.commandline.configuration;
 
 import it.shifty.textgame.engine.Game;
 import it.shifty.textgame.engine.display.DisplayOutput;

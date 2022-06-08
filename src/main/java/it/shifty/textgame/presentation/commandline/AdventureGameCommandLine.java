@@ -1,21 +1,20 @@
-package it.shifty.textgame;
+package it.shifty.textgame.presentation.commandline;
 
 import it.shifty.textgame.engine.Game;
 import it.shifty.textgame.engine.display.OutputMessage;
-import org.springframework.boot.Banner;
+import it.shifty.textgame.presentation.AdventureGameLayout;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Controller;
 
 import java.io.*;
 
-@SpringBootApplication
-public class AdventureGame implements CommandLineRunner {
+@Controller
+public class AdventureGameCommandLine implements CommandLineRunner, AdventureGameLayout {
 
-    private static Game game;
+    private Game game;
 
-    public AdventureGame(Game game) {
+    public AdventureGameCommandLine(Game game) {
         this.game = game;
     }
 
@@ -28,7 +27,8 @@ public class AdventureGame implements CommandLineRunner {
 
     private static final String EXIT_COMMAND = "esci";
 
-    private static void saveGame() {
+    @Override
+    public void saveGame(Game game) {
         try {
             FileOutputStream fos = new FileOutputStream(saveGameFilename);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -42,7 +42,8 @@ public class AdventureGame implements CommandLineRunner {
         }
     }
 
-    private static void loadGame() {
+    @Override
+    public void loadGame(Game game) {
         try {
             FileInputStream fis = new FileInputStream(saveGameFilename);
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -56,7 +57,7 @@ public class AdventureGame implements CommandLineRunner {
     }
 
     @Override
-    public void run(String[] args) {
+    public void execute(Game game) {
         try {
             BufferedReader in;
             String input;
@@ -68,10 +69,10 @@ public class AdventureGame implements CommandLineRunner {
                 input = in.readLine().trim();
                 switch (input) {
                     case SAVE_COMMAND:
-                        saveGame();
+                        saveGame(game);
                         break;
                     case LOAD_COMMAND:
-                        loadGame();
+                        loadGame(game);
                         break;
                     default:
                         output = game.executeCommand(input);
@@ -86,9 +87,10 @@ public class AdventureGame implements CommandLineRunner {
         }
     }
 
-    public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(AdventureGame.class);
-        app.setBannerMode(Banner.Mode.OFF);
-        app.run(args);
+    @Override
+    public void run(String[] args) {
+        execute(game);
     }
+
+
 }
