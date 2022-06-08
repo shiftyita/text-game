@@ -1,4 +1,4 @@
-package it.shifty.textgame.gameobjects;
+package it.shifty.textgame.engine.gameobjects;
 
 
 import lombok.Getter;

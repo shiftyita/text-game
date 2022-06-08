@@ -1,8 +1,8 @@
 package it.shifty.textgame.engine.map;
 
-import it.shifty.textgame.engine.display.OutputMessage;
+import it.shifty.textgame.engine.display.GameOutputMessage;
 import it.shifty.textgame.engine.exception.RoomMisplacedException;
-import it.shifty.textgame.gameobjects.Character;
+import it.shifty.textgame.engine.gameobjects.Character;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,15 +20,15 @@ public class MapEngine {
         calculateRoomSurroundigs();
     }
 
-    public OutputMessage moveCharacter(Character character, Direction direction) {
+    public GameOutputMessage moveCharacter(Character character, Direction direction) {
         Room currentRoom = character.getPosition();
         switch (direction) {
             case NORTH:
-                if (currentRoom.getN()!=null)
+                if (currentRoom.getN() != null)
                     return moveCharacterTo(character, currentRoom.getN());
                 break;
             case SOUTH:
-                if (currentRoom.getS()!=null)
+                if (currentRoom.getS() != null)
                     return moveCharacterTo(character, currentRoom.getS());
                 break;
             case WEST:
@@ -36,18 +36,33 @@ public class MapEngine {
                     return moveCharacterTo(character, currentRoom.getW());
                 break;
             case EAST:
-                if (currentRoom.getE()!=null)
+                if (currentRoom.getE() != null)
                     return moveCharacterTo(character, currentRoom.getE());
                 break;
             default:
-                return new OutputMessage("character.mapengine.donot.understand");
+                return new GameOutputMessage("character.mapengine.donot.understand");
         }
-        return new OutputMessage("character.mapengine.cannot.go");
+        return new GameOutputMessage("character.mapengine.cannot.go");
     }
 
-    private OutputMessage moveCharacterTo(Character character, Room destRoom) {
-        character.setPosition(destRoom);
-        return character.describeRoom();
+    private GameOutputMessage moveCharacterTo(Character character, Room destRoom) {
+        GameOutputMessage message = new GameOutputMessage();
+        boolean canMove = false;
+        String msg = "";
+        if (destRoom instanceof RoomClosedWithKey) {
+            if (character.getHoldenItem() instanceof Key) {
+                if (((RoomClosedWithKey) destRoom).canBeOpen((Key) character.getHoldenItem()))
+                    canMove = true;
+                message.addMessage(((RoomClosedWithKey) destRoom).open((Key) character.getHoldenItem()));
+            } else {
+                message.addMessage("items.key.door.need");
+            }
+        }
+        if (canMove) {
+            character.setPosition(destRoom);
+            message.addMessage(character.describeRoom().getMessage());
+        }
+        return message;
     }
 
     public void placeRooms(List<Room> rooms) throws RoomMisplacedException {

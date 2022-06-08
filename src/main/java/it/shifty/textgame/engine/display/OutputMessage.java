@@ -1,31 +1,33 @@
 package it.shifty.textgame.engine.display;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 public class OutputMessage {
 
     private List<String> multiMessage;
 
     private String message;
 
-    private boolean isGameMessage;
+    public OutputMessage() {
+        this.multiMessage = new ArrayList<>();
+    }
 
     public OutputMessage(List<String> multiMessage) {
-        this.multiMessage =multiMessage;
-        this.isGameMessage = true;
+        this.multiMessage = multiMessage;
     }
 
     public OutputMessage(String message) {
         this.message = message;
-        this.isGameMessage = true;
     }
 
-    public OutputMessage(String message, boolean isGameMessage) {
-        this.message = message;
-        this.isGameMessage = isGameMessage;
+    public void addMessage(String message) {
+        multiMessage.add(message);
     }
 
 }

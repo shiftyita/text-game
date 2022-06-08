@@ -1,22 +1,23 @@
-package it.shifty.textgame;
+package it.shifty.textgame.presentation.commandline;
 
-import it.shifty.textgame.engine.Game;
-import it.shifty.textgame.engine.display.OutputMessage;
-import org.springframework.boot.Banner;
+import it.shifty.textgame.engine.GameService;
+import it.shifty.textgame.engine.display.GameOutputMessage;
+import it.shifty.textgame.presentation.MenuGameLayout;
+import it.shifty.textgame.presentation.commandline.engine.parser.CommandParser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Controller;
 
 import java.io.*;
 
-@SpringBootApplication
-public class AdventureGame implements CommandLineRunner {
+@Controller
+public class AdventureGameCommandLine implements CommandLineRunner, MenuGameLayout {
 
-    private static Game game;
+    private GameService gameService;
 
-    public AdventureGame(Game game) {
-        this.game = game;
+    public AdventureGameCommandLine(GameService gameService) {
+        this.gameService = gameService;
     }
 
     private static String saveGameFilename = "game.sav";
@@ -28,11 +29,15 @@ public class AdventureGame implements CommandLineRunner {
 
     private static final String EXIT_COMMAND = "esci";
 
-    private static void saveGame() {
+    @Autowired
+    private CommandParser commandParser;
+
+    @Override
+    public void saveGame(GameService gameService) {
         try {
             FileOutputStream fos = new FileOutputStream(saveGameFilename);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(game);
+            oos.writeObject(gameService);
             oos.flush();
             oos.close();
             System.out.print("Game saved\n");
@@ -42,11 +47,12 @@ public class AdventureGame implements CommandLineRunner {
         }
     }
 
-    private static void loadGame() {
+    @Override
+    public void loadGame(GameService gameService) {
         try {
             FileInputStream fis = new FileInputStream(saveGameFilename);
             ObjectInputStream ois = new ObjectInputStream(fis);
-            game = (Game) ois.readObject();
+            gameService = (GameService) ois.readObject();
             ois.close();
             System.out.print("\n---Game loaded---\n");
         } catch (Exception e) {
@@ -56,39 +62,46 @@ public class AdventureGame implements CommandLineRunner {
     }
 
     @Override
-    public void run(String[] args) {
+    public void exit() {
+        System.exit(1);
+    }
+
+    @Override
+    public void execute(GameService gameService) {
         try {
             BufferedReader in;
             String input;
-            OutputMessage output = new OutputMessage("");
+            GameOutputMessage output = new GameOutputMessage();
             in = new BufferedReader(new InputStreamReader(System.in));
-            game.showIntro();
+            commandParser.showMessage(gameService.showIntro());
             do {
                 System.out.print("> ");
                 input = in.readLine().trim();
                 switch (input) {
                     case SAVE_COMMAND:
-                        saveGame();
+                        saveGame(gameService);
                         break;
                     case LOAD_COMMAND:
-                        loadGame();
+                        loadGame(gameService);
                         break;
                     default:
-                        output = game.executeCommand(input);
+                        output = commandParser.executeCommand(input);
                         break;
                 }
                 if (output.getMessage() != "") {
-                    game.showMessage(output);
+                    commandParser.showMessage(output);
                 }
             } while (!EXIT_COMMAND.equals(input));
+            exit();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(AdventureGame.class);
-        app.setBannerMode(Banner.Mode.OFF);
-        app.run(args);
+    @Override
+    public void run(String[] args) {
+        execute(gameService);
     }
+
+
 }
