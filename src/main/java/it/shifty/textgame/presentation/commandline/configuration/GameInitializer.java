@@ -2,6 +2,8 @@ package it.shifty.textgame.presentation.commandline.configuration;
 
 import it.shifty.textgame.engine.exception.RoomMisplacedException;
 import it.shifty.textgame.engine.gameobjects.Character;
+import it.shifty.textgame.engine.gameobjects.ItemObject;
+import it.shifty.textgame.engine.gameobjects.Weapon;
 import it.shifty.textgame.engine.map.Key;
 import it.shifty.textgame.engine.map.MapEngine;
 import it.shifty.textgame.engine.map.Room;
@@ -9,6 +11,7 @@ import it.shifty.textgame.engine.map.RoomClosedWithKey;
 import it.shifty.textgame.presentation.GameBuilder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class GameInitializer {
@@ -17,6 +20,8 @@ public class GameInitializer {
 
     public void constructDefaultGameService(GameBuilder builder) {
         try {
+            HashMap<String, ItemObject> itemsInGame = new HashMap<>();
+
             Key universalKey = new Key("bella chiave", "key");
             addRoom(new RoomClosedWithKey("0-0", "room.description.standard", 0, 0, universalKey));
             addRoom(new RoomClosedWithKey("0-1", "room.description.standard", 0, 1, universalKey));
@@ -28,9 +33,13 @@ public class GameInitializer {
             Character character = new Character("Player", "Lovely game-player", true, mapEngine.getRoom(0, 0).get());
             character.setHoldenItem(universalKey);
 
+            Weapon weapon = new Weapon("spada bastarda", "bastard.sword.description");
+            itemsInGame.put(weapon.getName(), weapon);
+
             builder.addRooms(roomList);
             builder.addMapEngine(mapEngine);
             builder.addMainCharacter(character);
+            builder.addItems(itemsInGame);
 
         } catch (RoomMisplacedException ex) {
 

@@ -16,4 +16,8 @@ public interface GameEngineLayout {
 
     GameOutputMessage describeRoom();
 
+    ItemObject getItemGivenName(String name);
+
+    GameOutputMessage addItemInInventory(ItemObject itemObject);
+
 }

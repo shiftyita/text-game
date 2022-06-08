@@ -2,6 +2,7 @@ package it.shifty.textgame.presentation.commandline.engine.parser;
 
 import it.shifty.textgame.engine.GameService;
 import it.shifty.textgame.engine.display.GameOutputMessage;
+import it.shifty.textgame.engine.gameobjects.ItemObject;
 import it.shifty.textgame.engine.map.Direction;
 import it.shifty.textgame.presentation.DisplayOutput;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,7 @@ public class CommandParser {
         GO_W.addOperation(Operations.NONE);
         INVENTORY.addOperation(Operations.NONE);
         LOOK.addOperation(Operations.NONE);
+        TAKE.addOperation(Operations.NEED_TARGET);
     }
 
     public static List<String> wordList(String lowerCaseString) {
@@ -69,11 +71,28 @@ public class CommandParser {
                 Actions actionCatched = Actions.fromString(wordList.get(0));
                 if (actionCatched.getOperation().equals(Operations.NONE)) {
                     return processSingleOperation(actionCatched);
+                } else if (actionCatched.getOperation().equals(Operations.NEED_TARGET)) {
+                    if (wordList.size() == 2)
+                        return processDoubleOperation(actionCatched, wordList.get(1));
                 }
             } catch (Exception ex) {
                 return new GameOutputMessage("default.message.not.understand");
             }
             return new GameOutputMessage(CommandParser.parseCommand(wordList));
+        }
+    }
+
+    public GameOutputMessage processDoubleOperation(Actions actions, String itemName) {
+        if (vocab.containsKey(itemName)) {
+            ItemObject item = gameService.getItemGivenName(itemName);
+            switch (actions) {
+                case TAKE:
+                    return gameService.addItemInInventory(item);
+                default:
+                    return new GameOutputMessage("text.blank");
+            }
+        } else {
+            return new GameOutputMessage("default.message.not.understand");
         }
     }
 

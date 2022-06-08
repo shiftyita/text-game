@@ -2,10 +2,12 @@ package it.shifty.textgame.engine.builder;
 
 import it.shifty.textgame.engine.GameService;
 import it.shifty.textgame.engine.gameobjects.Character;
+import it.shifty.textgame.engine.gameobjects.ItemObject;
 import it.shifty.textgame.engine.map.MapEngine;
 import it.shifty.textgame.engine.map.Room;
 import it.shifty.textgame.presentation.GameBuilder;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class GameServiceBuilder implements GameBuilder {
@@ -13,6 +15,8 @@ public class GameServiceBuilder implements GameBuilder {
     private MapEngine mapEngine;
     private Character character;
     private List<Character> characterList;
+
+    private HashMap<String, ItemObject> itemsInGame;
 
     @Override
     public void addRooms(List<Room> roomList) {
@@ -34,7 +38,12 @@ public class GameServiceBuilder implements GameBuilder {
         this.characterList = characterList;
     }
 
+    @Override
+    public void addItems(HashMap<String, ItemObject> itemsInGame) {
+        this.itemsInGame = itemsInGame;
+    }
+
     public GameService getResult() {
-        return new GameService(roomList, mapEngine, character, characterList);
+        return new GameService(roomList, mapEngine, character, characterList, itemsInGame);
     }
 }

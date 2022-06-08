@@ -9,6 +9,7 @@ import it.shifty.textgame.engine.map.MapEngine;
 import it.shifty.textgame.engine.map.Room;
 import it.shifty.textgame.presentation.GameEngineLayout;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -16,17 +17,19 @@ public class GameService implements GameEngineLayout {
 
     private final List<Room> roomList;
 
+    private final HashMap<String, ItemObject> itemsInGame;
     private final MapEngine mapEngine;
 
     private final Character character;
 
     private final List<Character> characterList;
 
-    public GameService(List<Room> roomList, MapEngine mapEngine, Character character, List<Character> characterList) {
+    public GameService(List<Room> roomList, MapEngine mapEngine, Character character, List<Character> characterList, HashMap<String, ItemObject> itemsInGame) {
         this.roomList = roomList;
         this.mapEngine = mapEngine;
         this.character = character;
         this.characterList = characterList;
+        this.itemsInGame = itemsInGame;
     }
 
     private static final Logger LOGGER = Logger.getLogger(GameService.class.getName());
@@ -65,4 +68,15 @@ public class GameService implements GameEngineLayout {
     public GameOutputMessage describeRoom() {
         return character.describeRoom();
     }
+
+    @Override
+    public ItemObject getItemGivenName(String name) {
+        return itemsInGame.get(name);
+    }
+
+    @Override
+    public GameOutputMessage addItemInInventory(ItemObject itemObject) {
+        return character.addItemInInventory(itemObject);
+    }
+
 }
