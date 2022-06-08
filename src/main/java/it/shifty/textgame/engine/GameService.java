@@ -1,21 +1,22 @@
 package it.shifty.textgame.engine;
 
-import it.shifty.textgame.engine.display.DisplayOutput;
 import it.shifty.textgame.engine.display.OutputMessage;
 import it.shifty.textgame.engine.exception.LoseGameException;
 import it.shifty.textgame.engine.exception.RoomMisplacedException;
 import it.shifty.textgame.engine.gameobjects.Character;
+import it.shifty.textgame.engine.gameobjects.ItemObject;
 import it.shifty.textgame.engine.map.*;
-import it.shifty.textgame.presentation.commandline.engine.parser.Actions;
+import it.shifty.textgame.presentation.GameEngineLayout;
 import it.shifty.textgame.presentation.commandline.engine.parser.CommandParser;
-import it.shifty.textgame.presentation.commandline.engine.parser.Operations;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Game {
+@Service
+public class GameService implements GameEngineLayout {
 
     CommandParser parser;
 
@@ -25,21 +26,17 @@ public class Game {
 
     private Character character;
 
-    private DisplayOutput displayOutput;
+    private static final Logger LOGGER = Logger.getLogger(GameService.class.getName());
 
-    private static final Logger LOGGER = Logger.getLogger( Game.class.getName() );
-
-    public Game(DisplayOutput displayOutput) {
+    public GameService() {
         try {
             initializeGame();
-            this.displayOutput = displayOutput;
         } catch (Exception | RoomMisplacedException ex) {
             LOGGER.log(Level.SEVERE, ex.toString());
         }
     }
 
     private void initializeGame() throws RoomMisplacedException {
-        parser = new CommandParser();
 //            addRoom(new Room("0-0", "room.description.standard", 0,0 ));
 //            addRoom(new Room("0-1", "room.description.standard", 0,1 ));
 //            addRoom(new Room("1-0", "room.description.standard", 1,0 ));
@@ -71,54 +68,30 @@ public class Game {
 
     private void addRoom(Room room) {
         roomList.add(room);
-        parser.addObjectName(room.getName());
+//        parser.addObjectName(room.getName());
     }
 
     public void showIntro() {
 
     }
 
-    public OutputMessage executeCommand(String input) {
-        List<String> wordList;
-        String lowerCaseString = input.toLowerCase();
-        String outcome;
-        if (lowerCaseString.isBlank())
-            return new OutputMessage("default.message.command.missing");
-        else {
-            wordList = CommandParser.wordList(lowerCaseString);
-            try {
-                //recognize the action
-                Actions actionCatched = Actions.fromString(wordList.get(0));
-                if (actionCatched.getOperation().equals(Operations.NONE)) {
-                    return processSingleOperation(actionCatched);
-                }
-            } catch (Exception ex) {
-                return new OutputMessage("default.message.not.understand");
-            }
-            return new OutputMessage(CommandParser.parseCommand(wordList));
-        }
+    @Override
+    public OutputMessage moveCharacter(Direction direction) {
+        return mapEngine.moveCharacter(character, direction);
     }
 
-    public OutputMessage processSingleOperation(Actions action) {
-        switch (action) {
-            case GO_E:
-                return mapEngine.moveCharacter(character, Direction.EAST);
-            case GO_N:
-                return mapEngine.moveCharacter(character, Direction.NORTH);
-            case GO_W:
-                return mapEngine.moveCharacter(character, Direction.WEST);
-            case GO_S:
-                return mapEngine.moveCharacter(character, Direction.SOUTH);
-            case INVENTORY:
-                return character.describeInventory();
-            case LOOK:
-                return character.describeRoom();
-            default:
-                return new OutputMessage("");
-        }
+    @Override
+    public OutputMessage describeInventory() {
+        return character.describeInventory();
     }
 
-    public void showMessage(OutputMessage output) {
-        displayOutput.printTextOutput(output);
+    @Override
+    public List<ItemObject> showInventory() {
+        return character.getInventory();
+    }
+
+    @Override
+    public OutputMessage describeRoom() {
+        return character.describeRoom();
     }
 }

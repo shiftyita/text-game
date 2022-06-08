@@ -1,8 +1,9 @@
 package it.shifty.textgame.presentation.commandline.configuration;
 
-import it.shifty.textgame.engine.Game;
+import it.shifty.textgame.engine.GameService;
 import it.shifty.textgame.engine.display.DisplayOutput;
 import it.shifty.textgame.engine.display.SysOutLocaleDisplay;
+import it.shifty.textgame.presentation.commandline.engine.parser.CommandParser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,8 +18,12 @@ public class GameConfig {
     }
 
     @Bean
-    public Game game(DisplayOutput displayOutput) {
-        return new Game(displayOutput);
+    public GameService game() {
+        return new GameService();
+    }
+
+    public CommandParser commandParser(DisplayOutput displayOutput) {
+        return new CommandParser(displayOutput);
     }
 
 }

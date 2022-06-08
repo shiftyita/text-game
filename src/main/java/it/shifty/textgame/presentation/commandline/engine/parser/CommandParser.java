@@ -1,5 +1,9 @@
 package it.shifty.textgame.presentation.commandline.engine.parser;
 
+import it.shifty.textgame.engine.GameService;
+import it.shifty.textgame.engine.display.DisplayOutput;
+import it.shifty.textgame.engine.display.OutputMessage;
+import it.shifty.textgame.engine.map.Direction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 
@@ -17,7 +21,13 @@ public class CommandParser {
     @Autowired
     private Environment env;
 
-    public CommandParser() {
+    @Autowired
+    public GameService gameService;
+
+    private DisplayOutput displayOutput;
+
+    public CommandParser(DisplayOutput displayOutput) {
+        this.displayOutput = displayOutput;
         initializeEnums();
     }
 
@@ -29,7 +39,6 @@ public class CommandParser {
         INVENTORY.addOperation(Operations.NONE);
         LOOK.addOperation(Operations.NONE);
     }
-
 
     public static List<String> wordList(String lowerCaseString) {
         String delims = "[ \t,.:;?!\"']+";
@@ -45,5 +54,49 @@ public class CommandParser {
 
     public void addObjectName(String name) {
         vocab.put(name, Words.NOUN);
+    }
+
+    public OutputMessage executeCommand(String input) {
+        List<String> wordList;
+        String lowerCaseString = input.toLowerCase();
+        String outcome;
+        if (lowerCaseString.isBlank())
+            return new OutputMessage("default.message.command.missing");
+        else {
+            wordList = CommandParser.wordList(lowerCaseString);
+            try {
+                //recognize the action
+                Actions actionCatched = Actions.fromString(wordList.get(0));
+                if (actionCatched.getOperation().equals(Operations.NONE)) {
+                    return processSingleOperation(actionCatched);
+                }
+            } catch (Exception ex) {
+                return new OutputMessage("default.message.not.understand");
+            }
+            return new OutputMessage(CommandParser.parseCommand(wordList));
+        }
+    }
+
+    public OutputMessage processSingleOperation(Actions action) {
+        switch (action) {
+            case GO_E:
+                return gameService.moveCharacter(Direction.EAST);
+            case GO_N:
+                return gameService.moveCharacter(Direction.NORTH);
+            case GO_W:
+                return gameService.moveCharacter(Direction.WEST);
+            case GO_S:
+                return gameService.moveCharacter(Direction.SOUTH);
+            case INVENTORY:
+                return gameService.describeInventory();
+            case LOOK:
+                return gameService.describeRoom();
+            default:
+                return new OutputMessage("");
+        }
+    }
+
+    public void showMessage(OutputMessage output) {
+        displayOutput.printTextOutput(output);
     }
 }
