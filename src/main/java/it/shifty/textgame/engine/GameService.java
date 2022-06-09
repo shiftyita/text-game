@@ -24,6 +24,8 @@ public class GameService implements GameEngineLayout {
 
     private final List<Character> characterList;
 
+    private static final Logger LOGGER = Logger.getLogger(GameService.class.getName());
+
     public GameService(List<Room> roomList, MapEngine mapEngine, Character character, List<Character> characterList, HashMap<String, ItemObject> itemsInGame) {
         this.roomList = roomList;
         this.mapEngine = mapEngine;
@@ -32,7 +34,9 @@ public class GameService implements GameEngineLayout {
         this.itemsInGame = itemsInGame;
     }
 
-    private static final Logger LOGGER = Logger.getLogger(GameService.class.getName());
+    public HashMap<String, ItemObject> getItemsInGame() {
+        return itemsInGame;
+    }
 
     private void manageDamage(Character attackingCharacter, Character defendingCharacter) throws LoseGameException {
         int firstDamage = attackingCharacter.getPrimaryWeapon() != null ? attackingCharacter.getPrimaryWeapon().getDamage() : 0;

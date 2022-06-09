@@ -34,7 +34,7 @@ public class Character extends Asset {
     public GameOutputMessage addItemInInventory(ItemObject itemObject) {
         inventory.add(itemObject);
         List<String> output = new ArrayList<>();
-        output.add(itemObject.getName());
+        output.add(itemObject.getKeyName());
         output.add("items.add.inventory");
         return new GameOutputMessage(output);
     }

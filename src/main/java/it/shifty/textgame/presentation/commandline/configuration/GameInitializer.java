@@ -22,19 +22,19 @@ public class GameInitializer {
         try {
             HashMap<String, ItemObject> itemsInGame = new HashMap<>();
 
-            Key universalKey = new Key("bella chiave", "key");
-            addRoom(new RoomClosedWithKey("0-0", "room.description.standard", 0, 0, universalKey));
-            addRoom(new RoomClosedWithKey("0-1", "room.description.standard", 0, 1, universalKey));
-            addRoom(new RoomClosedWithKey("1-0", "room.description.standard", 1, 0, universalKey));
-            addRoom(new RoomClosedWithKey("1-1", "room.description.standard", 1, 1, universalKey));
-            addRoom(new RoomClosedWithKey("2-2", "room.description.standard", 2, 2, universalKey));
+            Key universalKey = new Key("items.key.name", "items.key.description");
+            addRoom(new RoomClosedWithKey("room.closed.0.0.name", "room.description.standard", 0, 0, universalKey));
+            addRoom(new RoomClosedWithKey("room.closed.0.1.name", "room.description.standard", 0, 1, universalKey));
+            addRoom(new RoomClosedWithKey("room.closed.1.0.name", "room.description.standard", 1, 0, universalKey));
+            addRoom(new RoomClosedWithKey("room.closed.1.1.name", "room.description.standard", 1, 1, universalKey));
+            addRoom(new RoomClosedWithKey("room.closed.2.2.name", "room.description.standard", 2, 2, universalKey));
 
             MapEngine mapEngine = new MapEngine(roomList, 3, 3);
-            Character character = new Character("Player", "Lovely game-player", true, mapEngine.getRoom(0, 0).get());
+            Character character = new Character("character.mainplayer.name", "character.mainplayer.description", true, mapEngine.getRoom(0, 0).get());
             character.setHoldenItem(universalKey);
 
-            Weapon weapon = new Weapon("spada bastarda", "bastard.sword.description");
-            itemsInGame.put(weapon.getName(), weapon);
+            Weapon weapon = new Weapon("items.sword.bastard.sword.name", "items.sword.bastard.sword.description");
+            itemsInGame.put(weapon.getInternalName(), weapon);
 
             builder.addRooms(roomList);
             builder.addMapEngine(mapEngine);

@@ -4,14 +4,12 @@ import it.shifty.textgame.engine.GameService;
 import it.shifty.textgame.engine.display.GameOutputMessage;
 import it.shifty.textgame.engine.gameobjects.ItemObject;
 import it.shifty.textgame.engine.map.Direction;
+import it.shifty.textgame.engine.utils.GameUtils;
 import it.shifty.textgame.presentation.DisplayOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import static it.shifty.textgame.presentation.commandline.engine.parser.Actions.*;
 
@@ -22,14 +20,15 @@ public class CommandParser {
     @Autowired
     private Environment env;
 
-    @Autowired
-    public GameService gameService;
+    private GameService gameService;
 
     private DisplayOutput displayOutput;
 
-    public CommandParser(DisplayOutput displayOutput) {
+    public CommandParser(DisplayOutput displayOutput, GameService gameService) {
+        this.gameService = gameService;
         this.displayOutput = displayOutput;
         initializeEnums();
+        itemsCensus();
     }
 
     private void initializeEnums() {
@@ -54,6 +53,14 @@ public class CommandParser {
         return "";
     }
 
+    //TODO => Shared cache (Hazelcast?)
+    private void itemsCensus() {
+        final HashMap<String, ItemObject> itemObjects = gameService.getItemsInGame();
+        for (Map.Entry<String, ItemObject> itemObjectEntry : itemObjects.entrySet()) {
+            addObjectName(itemObjectEntry.getKey());
+        }
+    }
+
     public void addObjectName(String name) {
         vocab.put(name, Words.NOUN);
     }
@@ -61,7 +68,6 @@ public class CommandParser {
     public GameOutputMessage executeCommand(String input) {
         List<String> wordList;
         String lowerCaseString = input.toLowerCase();
-        String outcome;
         if (lowerCaseString.isBlank())
             return new GameOutputMessage("default.message.command.missing");
         else {
@@ -72,8 +78,10 @@ public class CommandParser {
                 if (actionCatched.getOperation().equals(Operations.NONE)) {
                     return processSingleOperation(actionCatched);
                 } else if (actionCatched.getOperation().equals(Operations.NEED_TARGET)) {
-                    if (wordList.size() == 2)
-                        return processDoubleOperation(actionCatched, wordList.get(1));
+                    if (wordList.size() >= 2) {
+                        wordList.remove(0);
+                        return processDoubleOperation(actionCatched, GameUtils.abstractAssetNameFormatter(String.join("", wordList)));
+                    }
                 }
             } catch (Exception ex) {
                 return new GameOutputMessage("default.message.not.understand");

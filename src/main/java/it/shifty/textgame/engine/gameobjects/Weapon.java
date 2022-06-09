@@ -1,10 +1,5 @@
 package it.shifty.textgame.engine.gameobjects;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 public class Weapon extends ItemObject implements DamageDealer {
 
     private int damage = 0;
