@@ -6,7 +6,7 @@
 
     <groupId>it.shifty.game</groupId>
     <artifactId>text-game</artifactId>
-    <version>0.1.5</version>
+    <version>0.1.6-SNAPSHOT</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
