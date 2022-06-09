@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface GameEngineLayout {
 
-    void initializeGame();
-
     GameOutputMessage moveCharacter(Direction direction);
 
     GameOutputMessage describeInventory();
@@ -17,5 +15,9 @@ public interface GameEngineLayout {
     List<ItemObject> showInventory();
 
     GameOutputMessage describeRoom();
+
+    ItemObject getItemGivenName(String name);
+
+    GameOutputMessage addItemInInventory(ItemObject itemObject);
 
 }

@@ -10,9 +10,7 @@ public class SysOutLocaleDisplay implements DisplayOutput {
             if (message.getMessage() != null) {
                 System.out.println(message.getMessage());
             } else {
-                for (String text : message.getMultiMessage()) {
-                    System.out.println(text);
-                }
+                System.out.println(String.join(" ", message.getMultiMessage()));
             }
         } else
             System.out.println(message.getMessage());

@@ -4,12 +4,12 @@ import it.shifty.textgame.engine.GameService;
 
 public interface MenuGameLayout {
 
-    public void saveGame(GameService gameService);
+    void saveGame(GameService gameService);
 
-    public void loadGame(GameService gameService);
+    void loadGame(GameService gameService);
 
-    public void execute(GameService gameService);
+    void execute(GameService gameService);
 
-    public void exit();
+    void exit();
 
 }

@@ -31,6 +31,14 @@ public class Character extends Asset {
         this.position = position;
     }
 
+    public GameOutputMessage addItemInInventory(ItemObject itemObject) {
+        inventory.add(itemObject);
+        List<String> output = new ArrayList<>();
+        output.add(itemObject.getKeyName());
+        output.add("items.add.inventory");
+        return new GameOutputMessage(output);
+    }
+
     public GameOutputMessage describeRoom() {
         return new GameOutputMessage(position.getDescription());
     }
