@@ -19,6 +19,7 @@ public class Character extends Asset {
     private boolean mainCharacter;
     private Room position;
     private ItemObject holdenItem;
+    private int actionPoint;
 
     public Character(String name, String description) {
         super(name, description, 100);
