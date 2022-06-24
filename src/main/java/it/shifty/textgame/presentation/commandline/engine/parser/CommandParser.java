@@ -32,17 +32,19 @@ public class CommandParser {
     }
 
     private void initializeEnums() {
-        GO_E.addOperation(Operations.NONE);
-        GO_N.addOperation(Operations.NONE);
-        GO_S.addOperation(Operations.NONE);
-        GO_W.addOperation(Operations.NONE);
-        INVENTORY.addOperation(Operations.NONE);
-        LOOK.addOperation(Operations.NONE);
-        TAKE.addOperation(Operations.NEED_TARGET);
+
     }
 
-    public static List<String> wordList(String lowerCaseString) {
+    public static List<String> wordStandardList(String lowerCaseString) {
         String delims = "[ \t,.:;?!\"']+";
+        List<String> strlist = new ArrayList<>();
+        String[] words = lowerCaseString.split(delims);
+        Collections.addAll(strlist, words);
+        return strlist;
+    }
+
+    public static List<String> wordCombatList(String lowerCaseString) {
+        String delims = "[,.:;?!\"']+";
         List<String> strlist = new ArrayList<>();
         String[] words = lowerCaseString.split(delims);
         Collections.addAll(strlist, words);
@@ -71,7 +73,12 @@ public class CommandParser {
         if (lowerCaseString.isBlank())
             return new GameOutputMessage("default.message.command.missing");
         else {
-            wordList = CommandParser.wordList(lowerCaseString);
+            if (!gameService.isInCombat()) {
+                wordList = CommandParser.wordStandardList(lowerCaseString);
+            }
+            else {
+                wordList = CommandParser.wordCombatList(lowerCaseString);
+            }
             try {
                 //recognize the action
                 Actions actionCatched = Actions.fromString(wordList.get(0));

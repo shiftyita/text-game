@@ -1,5 +1,4 @@
 package it.shifty.textgame.engine;
-
 import it.shifty.textgame.engine.combat.CombatEngine;
 import it.shifty.textgame.engine.display.GameOutputMessage;
 import it.shifty.textgame.engine.gameobjects.Character;
@@ -13,6 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
+/*
+* This is the main endpoint that will process all the commands
+* */
 public class GameService implements GameEngineLayout {
 
     private final List<Room> roomList;
@@ -21,9 +23,7 @@ public class GameService implements GameEngineLayout {
     private final Character character;
     private final List<Character> characterList;
     private static final Logger LOGGER = Logger.getLogger(GameService.class.getName());
-
     private boolean isBattleMode = false;
-
     private CombatEngine combatEngine;
 
     public GameService(List<Room> roomList, MapEngine mapEngine, Character character, List<Character> characterList, HashMap<String, ItemObject> itemsInGame) {
@@ -82,5 +82,11 @@ public class GameService implements GameEngineLayout {
     @Override
     public boolean isInCombat() {
         return isBattleMode;
+    }
+
+    @Override
+    public GameOutputMessage performAction(CombatEngine.CombactActions actions) {
+        combatEngine.performAction(actions);
+        return new GameOutputMessage("");
     }
 }

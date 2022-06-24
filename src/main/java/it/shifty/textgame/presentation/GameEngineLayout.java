@@ -26,4 +26,8 @@ public interface GameEngineLayout {
 
     boolean isInCombat();
 
+    GameOutputMessage performAction(CombatEngine.CombactActions actions);
+
+
+
 }

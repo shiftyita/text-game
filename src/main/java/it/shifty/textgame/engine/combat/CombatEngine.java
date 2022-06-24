@@ -37,7 +37,7 @@ public class CombatEngine {
         this.enemy = enemy;
     }
 
-    private void manageDamage(Character attackingCharacter, Character defendingCharacter, int attackBonus, int defenseBonus) throws LoseGameException {
+    private int manageDamage(Character attackingCharacter, Character defendingCharacter, int attackBonus, int defenseBonus) throws LoseGameException {
         int firstDamage = attackingCharacter.getPrimaryWeapon() != null ? (attackingCharacter.getPrimaryWeapon().getDamage() + attackBonus) : 0;
         int secondDamage = attackingCharacter.getSecondaryWeapon() != null ? (attackingCharacter.getPrimaryWeapon().getDamage() + attackBonus) : 0;
         int damageTaken = defendingCharacter.getArmor().absorbDamage(firstDamage + secondDamage - defenseBonus);
@@ -46,6 +46,16 @@ public class CombatEngine {
             if (defendingCharacter.isDestroyed() && defendingCharacter.isMainCharacter())
                 throw new LoseGameException("You lose the game. Your character died");
         }
+        return damageTaken;
+    }
+
+    public void performAction(CombactActions actions) {
+        int attackBonus = actions.attackBonus;
+        int defenseBonus = actions.defenseBonus;
+
+
+
+
     }
 
 }
