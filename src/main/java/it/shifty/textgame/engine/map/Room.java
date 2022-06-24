@@ -2,6 +2,7 @@ package it.shifty.textgame.engine.map;
 
 
 import it.shifty.textgame.engine.gameobjects.Asset;
+import it.shifty.textgame.engine.gameobjects.Character;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,8 @@ public class Room extends Asset {
 
     private int y;
 
+    private Character enemy;
+
     public Room(String roomName, String roomDescription) {
         super(roomName, roomDescription, false);
     }
@@ -23,6 +26,10 @@ public class Room extends Asset {
         this(roomName, roomDescription);
         this.x = posX;
         this.y = posY;
+    }
+
+    void addEnemy(Character enemy) {
+        this.enemy = enemy;
     }
 
     void setN(Room n) {

@@ -1,7 +1,7 @@
 package it.shifty.textgame.engine;
 
+import it.shifty.textgame.engine.combat.CombatEngine;
 import it.shifty.textgame.engine.display.GameOutputMessage;
-import it.shifty.textgame.engine.exception.LoseGameException;
 import it.shifty.textgame.engine.gameobjects.Character;
 import it.shifty.textgame.engine.gameobjects.ItemObject;
 import it.shifty.textgame.engine.map.Direction;
@@ -21,6 +21,10 @@ public class GameService implements GameEngineLayout {
     private final Character character;
     private final List<Character> characterList;
     private static final Logger LOGGER = Logger.getLogger(GameService.class.getName());
+
+    private boolean isBattleMode = false;
+
+    private CombatEngine combatEngine;
 
     public GameService(List<Room> roomList, MapEngine mapEngine, Character character, List<Character> characterList, HashMap<String, ItemObject> itemsInGame) {
         this.roomList = roomList;
@@ -68,4 +72,15 @@ public class GameService implements GameEngineLayout {
         return character.addItemInInventory(itemObject);
     }
 
+    @Override
+    public GameOutputMessage startCombat() {
+        isBattleMode = true;
+        combatEngine = new CombatEngine(character, mapEngine.getEnemyInRoom(character.getPosition()));
+        return new GameOutputMessage("game.combat.start");
+    }
+
+    @Override
+    public boolean isInCombat() {
+        return isBattleMode;
+    }
 }

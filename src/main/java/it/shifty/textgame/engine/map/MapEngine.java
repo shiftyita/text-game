@@ -83,6 +83,11 @@ public class MapEngine {
         return map[x][y] != null;
     }
 
+    public Character getEnemyInRoom(Room room) {
+        Optional<Room> existingRoom = getRoom(room.getX(), room.getY());
+        return existingRoom.map(Room::getEnemy).orElse(null);
+    }
+
     public Room insertRoomInMap(Room room, int x, int y) throws RoomMisplacedException {
         check(x,y);
         //check if it's not already occupied

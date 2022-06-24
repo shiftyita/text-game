@@ -118,6 +118,9 @@ public class CommandParser {
                 return gameService.describeInventory();
             case LOOK:
                 return gameService.describeRoom();
+            case COMBAT:
+               return gameService.startCombat();
+
             default:
                 return new GameOutputMessage("text.blank");
         }

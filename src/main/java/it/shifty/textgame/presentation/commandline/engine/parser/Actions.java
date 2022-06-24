@@ -7,7 +7,13 @@ public enum Actions {
 
     PUT("metti"), TAKE("prendi"), DROP("lascia"), OPEN("apri"), CLOSE("chiudi"), LOOK("guarda"),
     PULL("tira"), PUSH("spingi"), INVENTORY("inventario"), GO_N ("nord"), GO_S("sud"), GO_E("est"), GO_W("ovest"),
-    UNRECOGNIZED("comando non riconosciuto");
+    COMBAT("combatti"),
+    UNRECOGNIZED("comando non riconosciuto"),
+    AGGRESSIVE_ATTACK("attacco poderoso"),
+    TOTAL_DEFENSE("difesa totale"),
+    DEFAULT_ATTACK("attacca"),
+    INVENTORY_LOOK("sbircia inventario"),
+    PARRY_AND_FIGHT("para e contrattacca");
 
     private String actionName;
     private List<String> synonyms = new ArrayList<>();
