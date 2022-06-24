@@ -1,6 +1,7 @@
 package it.shifty.textgame.engine.gameobjects;
 
 import it.shifty.textgame.engine.display.GameOutputMessage;
+import it.shifty.textgame.engine.exception.InsufficientActionPointsException;
 import it.shifty.textgame.engine.map.Room;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +20,9 @@ public class Character extends Asset {
     private boolean mainCharacter;
     private Room position;
     private ItemObject holdenItem;
-    private int actionPoint;
+    private final int DEFAULT_ACTION_POINT = 5;
+    private int actionPointsLeft;
+    private int totalActionPoints;
 
     public Character(String name, String description) {
         super(name, description, 100);
@@ -30,6 +33,14 @@ public class Character extends Asset {
         this(name, description);
         this.mainCharacter = mainCharacter;
         this.position = position;
+        this.totalActionPoints = DEFAULT_ACTION_POINT;
+        this.actionPointsLeft = this.totalActionPoints;
+    }
+
+    public Character(String name, String description, boolean mainCharacter, Room position, int actionPoint) {
+        this(name, description, mainCharacter, position);
+        this.totalActionPoints = actionPoint;
+        this.actionPointsLeft = this.totalActionPoints;
     }
 
     public GameOutputMessage addItemInInventory(ItemObject itemObject) {
@@ -55,6 +66,17 @@ public class Character extends Asset {
             output.add(item.getDescription());
         }
         return new GameOutputMessage(output);
+    }
+
+
+
+    public void reduceActionPoints(int actionPoint) throws InsufficientActionPointsException {
+        if (actionPointsLeft - actionPoint >= 0) {
+
+        }
+        else {
+            throw new InsufficientActionPointsException("exception.insufficient.action.point");
+        }
     }
 
 

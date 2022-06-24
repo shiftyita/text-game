@@ -16,14 +16,10 @@ import java.util.logging.Logger;
 public class GameService implements GameEngineLayout {
 
     private final List<Room> roomList;
-
     private final HashMap<String, ItemObject> itemsInGame;
     private final MapEngine mapEngine;
-
     private final Character character;
-
     private final List<Character> characterList;
-
     private static final Logger LOGGER = Logger.getLogger(GameService.class.getName());
 
     public GameService(List<Room> roomList, MapEngine mapEngine, Character character, List<Character> characterList, HashMap<String, ItemObject> itemsInGame) {
@@ -36,17 +32,6 @@ public class GameService implements GameEngineLayout {
 
     public HashMap<String, ItemObject> getItemsInGame() {
         return itemsInGame;
-    }
-
-    private void manageDamage(Character attackingCharacter, Character defendingCharacter) throws LoseGameException {
-        int firstDamage = attackingCharacter.getPrimaryWeapon() != null ? attackingCharacter.getPrimaryWeapon().getDamage() : 0;
-        int secondDamage = attackingCharacter.getSecondaryWeapon() != null ? attackingCharacter.getPrimaryWeapon().getDamage() : 0;
-        int damageTaken = defendingCharacter.getArmor().absorbDamage(firstDamage + secondDamage);
-        if (damageTaken > 0) {
-            defendingCharacter.absorbDamage(damageTaken);
-            if (defendingCharacter.isDestroyed() && defendingCharacter.isMainCharacter())
-                throw new LoseGameException("You lose the game. Your character died");
-        }
     }
 
     public GameOutputMessage showIntro() {
