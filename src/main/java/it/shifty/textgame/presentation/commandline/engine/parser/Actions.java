@@ -5,31 +5,43 @@ import java.util.List;
 
 public enum Actions {
 
-    PUT("metti"), TAKE("prendi"), DROP("lascia"), OPEN("apri"), CLOSE("chiudi"), LOOK("guarda"),
-    PULL("tira"), PUSH("spingi"), INVENTORY("inventario"), GO_N ("nord"), GO_S("sud"), GO_E("est"), GO_W("ovest"),
-    UNRECOGNIZED("comando non riconosciuto");
+    PUT("metti", Operations.NEED_SOURCE_TARGET),
+    TAKE("prendi", Operations.NEED_TARGET),
+    DROP("lascia", Operations.NEED_TARGET),
+    OPEN("apri", Operations.NEED_TARGET),
+    CLOSE("chiudi", Operations.NEED_TARGET),
+    LOOK("guarda", Operations.NONE),
+    PULL("tira", Operations.NEED_TARGET),
+    PUSH("spingi", Operations.NEED_TARGET),
+    INVENTORY("inventario", Operations.NONE),
+    GO_N ("nord", Operations.NONE),
+    GO_S("sud", Operations.NONE),
+    GO_E("est", Operations.NONE),
+    GO_W("ovest", Operations.NONE),
+    COMBAT("combatti", Operations.NONE),
+    UNRECOGNIZED("comando non riconosciuto", Operations.NONE),
+    AGGRESSIVE_ATTACK("attacco poderoso", Operations.NONE),
+    TOTAL_DEFENSE("difesa totale", Operations.NONE),
+    DEFAULT_ATTACK("attacca", Operations.NONE),
+    INVENTORY_LOOK("sbircia inventario", Operations.NONE),
+    PARRY_AND_FIGHT("para e contrattacca", Operations.NONE),
+    EQUIP("equipaggia", Operations.NEED_TARGET);
 
     private String actionName;
     private List<String> synonyms = new ArrayList<>();
 
-    private Operations operation;
+    private final Operations operation;
 
-    Actions(String defaultDescription) {
-        this.actionName = defaultDescription;
-        synonyms.add(defaultDescription);
-    }
+    private final String defaultDescription;
 
     Actions(String defaultDescription, Operations operation) {
-        this(defaultDescription);
+        this.defaultDescription = defaultDescription;
         this.operation = operation;
+        this.addSynonym(defaultDescription);
     }
 
     public void addSynonym(String synonym) {
         synonyms.add(synonym);
-    }
-
-    public void addOperation(Operations operation) {
-        this.operation = operation;
     }
 
     public Operations getOperation() {
