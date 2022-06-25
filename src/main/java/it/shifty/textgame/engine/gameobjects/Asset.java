@@ -1,6 +1,7 @@
 package it.shifty.textgame.engine.gameobjects;
 
 
+import it.shifty.textgame.engine.events.PublisherEngine;
 import lombok.Getter;
 import lombok.Setter;
 

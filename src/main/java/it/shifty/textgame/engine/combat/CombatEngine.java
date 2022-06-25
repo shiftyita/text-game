@@ -43,12 +43,28 @@ public class CombatEngine extends PublisherEngine {
         int secondDamage = attackingCharacter.getSecondaryWeapon() != null ? (attackingCharacter.getPrimaryWeapon().getDamage() + attackBonus) : 0;
         int damageTaken = defendingCharacter.getArmor().absorbDamage(firstDamage + secondDamage - defenseBonus);
         if (damageTaken > 0) {
-            defendingCharacter.absorbDamage(damageTaken);
-            if (defendingCharacter.isDestroyed() && defendingCharacter.isMainCharacter())
-                throw new LoseGameException("You lose the game. Your character died");
-            if (defendingCharacter.isDestroyed()) {
-                gameEventNotification("game.combat.enemy.died", defendingCharacter.getName());
+            if (!defendingCharacter.isMainCharacter()) {
+                gameEventNotification("game.combat.damage.enemy.suffer");
             }
+            else {
+                gameEventNotification("game.combat.character.take.damage");
+            }
+
+            defendingCharacter.absorbDamage(damageTaken);
+
+            if (defendingCharacter.isMainCharacter()) {
+                if (defendingCharacter.isDestroyed()) {
+                    throw new LoseGameException("You lose the game. Your character died");
+                }
+            }
+            else {
+                if (defendingCharacter.isDestroyed()) {
+                    gameEventNotification("game.combat.enemy.died", defendingCharacter.getName());
+                }
+            }
+        }
+        else {
+            gameEventNotification("game.combat.damage.enemy.absorbed");
         }
         return damageTaken;
     }
@@ -61,7 +77,7 @@ public class CombatEngine extends PublisherEngine {
         switch (actions) {
             case AGGRESSIVE_ATTACK, DEFAULT_ATTACK, PARRY_AND_FIGHT -> {
                 damageTaken = manageDamage(mainCharacter, enemy, attackBonus, defenseBonus);
-                gameEventNotification("game.combat.enemy.damage", damageTaken);
+                gameStatsNotification("game.combat.enemy.damage", damageTaken);
             }
         }
     }
