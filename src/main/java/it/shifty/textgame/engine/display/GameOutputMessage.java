@@ -26,4 +26,8 @@ public class GameOutputMessage extends OutputMessage {
         super(LocaleUtils.localizeString(message));
     }
 
+    public GameOutputMessage(String message, Object... params) {
+        super(String.format(LocaleUtils.localizeString(message), params));
+    }
+
 }

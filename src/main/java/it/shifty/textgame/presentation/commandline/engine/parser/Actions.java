@@ -24,7 +24,8 @@ public enum Actions {
     TOTAL_DEFENSE("difesa totale", Operations.NONE),
     DEFAULT_ATTACK("attacca", Operations.NONE),
     INVENTORY_LOOK("sbircia inventario", Operations.NONE),
-    PARRY_AND_FIGHT("para e contrattacca", Operations.NONE);
+    PARRY_AND_FIGHT("para e contrattacca", Operations.NONE),
+    EQUIP("equipaggia", Operations.NEED_TARGET);
 
     private String actionName;
     private List<String> synonyms = new ArrayList<>();

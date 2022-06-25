@@ -1,5 +1,6 @@
 package it.shifty.textgame.engine.display;
 
+import it.shifty.textgame.engine.events.EventManager;
 import it.shifty.textgame.presentation.DisplayOutput;
 
 public class SysOutLocaleDisplay implements DisplayOutput {

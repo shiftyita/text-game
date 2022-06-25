@@ -1,6 +1,7 @@
 package it.shifty.textgame.engine;
 import it.shifty.textgame.engine.combat.CombatEngine;
 import it.shifty.textgame.engine.display.GameOutputMessage;
+import it.shifty.textgame.engine.exception.LoseGameException;
 import it.shifty.textgame.engine.gameobjects.Character;
 import it.shifty.textgame.engine.gameobjects.ItemObject;
 import it.shifty.textgame.engine.map.Direction;
@@ -86,7 +87,13 @@ public class GameService implements GameEngineLayout {
 
     @Override
     public GameOutputMessage performAction(CombatEngine.CombactActions actions) {
-        combatEngine.performAction(actions);
-        return new GameOutputMessage("");
+        try {
+            combatEngine.performAction(actions);
+            return new GameOutputMessage("");
+        }
+        catch (Exception | LoseGameException ex) {
+            return new GameOutputMessage(ex.getMessage());
+        }
+
     }
 }

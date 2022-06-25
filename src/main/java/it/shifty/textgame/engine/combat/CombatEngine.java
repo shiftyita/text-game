@@ -1,5 +1,7 @@
 package it.shifty.textgame.engine.combat;
 
+import it.shifty.textgame.engine.PublisherEngine;
+import it.shifty.textgame.engine.events.EventManager;
 import it.shifty.textgame.engine.exception.LoseGameException;
 import it.shifty.textgame.engine.gameobjects.Character;
 import lombok.Getter;
@@ -7,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CombatEngine {
+public class CombatEngine extends PublisherEngine {
 
     public enum CombactActions {
         AGGRESSIVE_ATTACK(3,3,-1),
@@ -45,17 +47,24 @@ public class CombatEngine {
             defendingCharacter.absorbDamage(damageTaken);
             if (defendingCharacter.isDestroyed() && defendingCharacter.isMainCharacter())
                 throw new LoseGameException("You lose the game. Your character died");
+            if (defendingCharacter.isDestroyed()) {
+                notify("game.combat.enemy.died", defendingCharacter.getName());
+            }
         }
         return damageTaken;
     }
 
-    public void performAction(CombactActions actions) {
+    public void performAction(CombactActions actions) throws LoseGameException {
         int attackBonus = actions.attackBonus;
         int defenseBonus = actions.defenseBonus;
+        int damageTaken;
 
-
-
-
+        switch (actions) {
+            case AGGRESSIVE_ATTACK, DEFAULT_ATTACK, PARRY_AND_FIGHT -> {
+                damageTaken = manageDamage(mainCharacter, enemy, attackBonus, defenseBonus);
+                notify("game.combat.enemy.damage", damageTaken);
+            }
+        }
     }
 
 }
