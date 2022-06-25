@@ -17,7 +17,8 @@ public class SysOutLocaleDisplay implements DisplayOutput, EventListener {
             if (message.getMessage() != null) {
                 System.out.println(message.getMessage());
             } else {
-                System.out.println(String.join(" ", message.getMultiMessage()));
+                if (!message.getMultiMessage().isEmpty())
+                    System.out.println(String.join(" ", message.getMultiMessage()));
             }
         } else
             System.out.println(message.getMessage());

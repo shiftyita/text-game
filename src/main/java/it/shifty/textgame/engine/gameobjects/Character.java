@@ -67,7 +67,7 @@ public class Character extends Asset {
             output.add("character.inventory.empty");
             return new GameOutputMessage(output);
         }
-        output.add("Ecco cosa contiene il mio zaino:");
+        output.add("character.inventory.start.description");
         for (ItemObject item : inventory) {
             output.add(item.getDescription());
         }

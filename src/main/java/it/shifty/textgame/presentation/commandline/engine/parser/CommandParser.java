@@ -1,6 +1,7 @@
 package it.shifty.textgame.presentation.commandline.engine.parser;
 
 import it.shifty.textgame.engine.GameService;
+import it.shifty.textgame.engine.combat.CombatEngine;
 import it.shifty.textgame.engine.display.GameOutputMessage;
 import it.shifty.textgame.engine.gameobjects.ItemObject;
 import it.shifty.textgame.engine.map.Direction;
@@ -83,7 +84,7 @@ public class CommandParser {
                 //recognize the action
                 Actions actionCatched = Actions.fromString(wordList.get(0));
                 if (actionCatched.getOperation().equals(Operations.NONE)) {
-                    return processSingleOperation(actionCatched);
+                    processSingleOperation(actionCatched);
                 } else if (actionCatched.getOperation().equals(Operations.NEED_TARGET)) {
                     if (wordList.size() >= 2) {
                         wordList.remove(0);
@@ -93,7 +94,7 @@ public class CommandParser {
             } catch (Exception ex) {
                 return new GameOutputMessage("default.message.not.understand");
             }
-            return new GameOutputMessage(CommandParser.parseCommand(wordList));
+            return new GameOutputMessage();
         }
     }
 
@@ -102,7 +103,7 @@ public class CommandParser {
             ItemObject item = gameService.getItemGivenName(itemName);
             switch (actions) {
                 case TAKE:
-                    return gameService.addItemInInventory(item);
+                    gameService.addItemInInventory(item);
                 default:
                     return new GameOutputMessage("text.blank");
             }
@@ -111,25 +112,18 @@ public class CommandParser {
         }
     }
 
-    public GameOutputMessage processSingleOperation(Actions action) {
+    public void processSingleOperation(Actions action) {
         switch (action) {
-            case GO_E:
-                return gameService.moveCharacter(Direction.EAST);
-            case GO_N:
-                return gameService.moveCharacter(Direction.NORTH);
-            case GO_W:
-                return gameService.moveCharacter(Direction.WEST);
-            case GO_S:
-                return gameService.moveCharacter(Direction.SOUTH);
-            case INVENTORY:
-                return gameService.describeInventory();
-            case LOOK:
-                return gameService.describeRoom();
-            case COMBAT:
-               return gameService.startCombat();
-
-            default:
-                return new GameOutputMessage("text.blank");
+            case GO_E -> gameService.moveCharacter(Direction.EAST);
+            case GO_N -> gameService.moveCharacter(Direction.NORTH);
+            case GO_W -> gameService.moveCharacter(Direction.WEST);
+            case GO_S -> gameService.moveCharacter(Direction.SOUTH);
+            case INVENTORY -> gameService.describeInventory();
+            case LOOK -> gameService.describeRoom();
+            case COMBAT -> gameService.startCombat();
+            case TOTAL_DEFENSE, AGGRESSIVE_ATTACK, DEFAULT_ATTACK, PARRY_AND_FIGHT,  INVENTORY_LOOK
+                    -> gameService.performAction(CombatEngine.CombactActions.valueOf(action.name()));
+            default -> new GameOutputMessage("text.blank");
         }
     }
 

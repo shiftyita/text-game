@@ -18,7 +18,7 @@ public enum Actions {
     GO_S("sud", Operations.NONE),
     GO_E("est", Operations.NONE),
     GO_W("ovest", Operations.NONE),
-    COMBAT("combatti", Operations.NEED_TARGET),
+    COMBAT("combatti", Operations.NONE),
     UNRECOGNIZED("comando non riconosciuto", Operations.NONE),
     AGGRESSIVE_ATTACK("attacco poderoso", Operations.NONE),
     TOTAL_DEFENSE("difesa totale", Operations.NONE),
@@ -37,6 +37,7 @@ public enum Actions {
     Actions(String defaultDescription, Operations operation) {
         this.defaultDescription = defaultDescription;
         this.operation = operation;
+        this.addSynonym(defaultDescription);
     }
 
     public void addSynonym(String synonym) {

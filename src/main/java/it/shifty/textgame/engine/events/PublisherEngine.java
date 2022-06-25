@@ -10,4 +10,8 @@ public class PublisherEngine {
         EventManager.getInstance().notify(GAME_MESSAGE, new GameOutputMessage(message,params));
     }
 
+    public void gameEventNotification(GameOutputMessage message) {
+        EventManager.getInstance().notify(GAME_MESSAGE, message);
+    }
+
 }

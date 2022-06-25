@@ -10,23 +10,23 @@ import java.util.List;
 
 public interface GameEngineLayout {
 
-    GameOutputMessage moveCharacter(Direction direction);
+    void moveCharacter(Direction direction);
 
-    GameOutputMessage describeInventory();
+    void describeInventory();
 
     List<ItemObject> showInventory();
 
-    GameOutputMessage describeRoom();
+    void describeRoom();
 
     ItemObject getItemGivenName(String name);
 
-    GameOutputMessage addItemInInventory(ItemObject itemObject);
+    void addItemInInventory(ItemObject itemObject);
 
-    GameOutputMessage startCombat();
+    void startCombat();
 
     boolean isInCombat();
 
-    GameOutputMessage performAction(CombatEngine.CombactActions actions);
+    void performAction(CombatEngine.CombactActions actions);
 
 
 

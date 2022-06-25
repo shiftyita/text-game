@@ -1,6 +1,7 @@
 package it.shifty.textgame.engine;
 import it.shifty.textgame.engine.combat.CombatEngine;
 import it.shifty.textgame.engine.display.GameOutputMessage;
+import it.shifty.textgame.engine.events.PublisherEngine;
 import it.shifty.textgame.engine.exception.LoseGameException;
 import it.shifty.textgame.engine.gameobjects.Character;
 import it.shifty.textgame.engine.gameobjects.Enemy;
@@ -18,7 +19,7 @@ import java.util.logging.Logger;
 /*
 * This is the main endpoint that will process all the commands
 * */
-public class GameService implements GameEngineLayout {
+public class GameService extends PublisherEngine implements GameEngineLayout  {
 
     private final List<Room> roomList;
     private final HashMap<String, ItemObject> itemsInGame;
@@ -46,13 +47,13 @@ public class GameService implements GameEngineLayout {
     }
 
     @Override
-    public GameOutputMessage moveCharacter(Direction direction) {
-        return mapEngine.moveCharacter(character, direction);
+    public void moveCharacter(Direction direction) {
+        gameEventNotification(mapEngine.moveCharacter(character, direction));
     }
 
     @Override
-    public GameOutputMessage describeInventory() {
-        return character.describeInventory();
+    public void describeInventory() {
+        gameEventNotification(character.describeInventory());
     }
 
     @Override
@@ -61,8 +62,8 @@ public class GameService implements GameEngineLayout {
     }
 
     @Override
-    public GameOutputMessage describeRoom() {
-        return character.describeRoom();
+    public void describeRoom() {
+        gameEventNotification(character.describeRoom());
     }
 
     @Override
@@ -71,21 +72,21 @@ public class GameService implements GameEngineLayout {
     }
 
     @Override
-    public GameOutputMessage addItemInInventory(ItemObject itemObject) {
-        return character.addItemInInventory(itemObject);
+    public void addItemInInventory(ItemObject itemObject) {
+        gameEventNotification(character.addItemInInventory(itemObject));
     }
 
     @Override
-    public GameOutputMessage startCombat() {
+    public void startCombat() {
         //start battle only if there are enemies in the room.
         Optional<Enemy> enemy = mapEngine.getEnemyInRoom(character.getPosition());
         if (enemy.isPresent()) {
             isBattleMode = true;
             combatEngine = new CombatEngine(character, enemy.get());
-            return new GameOutputMessage("game.combat.start");
+            gameEventNotification(new GameOutputMessage("game.combat.start"));
         }
         else {
-            return new GameOutputMessage("game.combat.no.enemies");
+            gameEventNotification(new GameOutputMessage("game.combat.no.enemies"));
         }
     }
 
@@ -95,14 +96,12 @@ public class GameService implements GameEngineLayout {
     }
 
     @Override
-    public GameOutputMessage performAction(CombatEngine.CombactActions actions) {
+    public void performAction(CombatEngine.CombactActions actions) {
         try {
             combatEngine.performAction(actions);
-            return new GameOutputMessage("");
         }
         catch (Exception | LoseGameException ex) {
-            return new GameOutputMessage(ex.getMessage());
+            gameEventNotification(new GameOutputMessage(ex.getMessage()));
         }
-
     }
 }

@@ -13,7 +13,7 @@ public abstract class AbstractAsset {
     public AbstractAsset(String name, String description) {
         this.keyName = name;
         this.name = LocaleUtils.localizeString(name);
-        this.description = LocaleUtils.localizeString(description);
+        this.description = description;
         this.internalName = formatName(LocaleUtils.localizeString(name));
     }
 

@@ -31,7 +31,7 @@ public class GameInitializer {
             Key universalKey = new Key("items.key.name", "items.key.description");
             Weapon basicWeapon = new Weapon("items.sword.basic.name", "items.sword.basic.description", DEFAULT_DAMAGE_WEAPON);
             Armor defaultArmor = new Armor("items.armor.basic.name","items.armor.basic.description", DEFAULT_ARMOR_HEALTH);
-            Weapon bastardSword = new Weapon("items.sword.bastard.sword.name", "items.sword.bastard.sword.description");
+            Weapon bastardSword = new Weapon("items.sword.bastard.sword.name", "items.sword.bastard.sword.description", 150);
 
             /*
             2 -- ADD ENEMIES
