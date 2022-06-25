@@ -9,6 +9,8 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static it.shifty.textgame.engine.gameobjects.GlobalParameters.DEFAULT_DAMAGE_WEAPON;
+
 @Getter
 @Setter
 public class Character extends Asset {
@@ -29,9 +31,13 @@ public class Character extends Asset {
         this.inventory = new ArrayList<>();
     }
 
-    public Character(String name, String description, boolean mainCharacter, Room position) {
+    public Character(String name, String description, boolean mainCharacter) {
         this(name, description);
         this.mainCharacter = mainCharacter;
+    }
+
+    public Character(String name, String description, boolean mainCharacter, Room position) {
+        this(name, description, mainCharacter);
         this.position = position;
         this.totalActionPoints = DEFAULT_ACTION_POINT;
         this.actionPointsLeft = this.totalActionPoints;

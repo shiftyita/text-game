@@ -4,6 +4,6 @@ import it.shifty.textgame.engine.display.OutputMessage;
 
 public interface EventListener {
 
-    void update(EventManager.EventMessageType eventType, OutputMessage message);
+    void publishEvent(EventManager.EventMessageType eventType, OutputMessage message);
 
 }

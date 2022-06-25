@@ -1,7 +1,6 @@
 package it.shifty.textgame.engine.combat;
 
-import it.shifty.textgame.engine.PublisherEngine;
-import it.shifty.textgame.engine.events.EventManager;
+import it.shifty.textgame.engine.events.PublisherEngine;
 import it.shifty.textgame.engine.exception.LoseGameException;
 import it.shifty.textgame.engine.gameobjects.Character;
 import lombok.Getter;
@@ -48,7 +47,7 @@ public class CombatEngine extends PublisherEngine {
             if (defendingCharacter.isDestroyed() && defendingCharacter.isMainCharacter())
                 throw new LoseGameException("You lose the game. Your character died");
             if (defendingCharacter.isDestroyed()) {
-                notify("game.combat.enemy.died", defendingCharacter.getName());
+                gameEventNotification("game.combat.enemy.died", defendingCharacter.getName());
             }
         }
         return damageTaken;
@@ -62,7 +61,7 @@ public class CombatEngine extends PublisherEngine {
         switch (actions) {
             case AGGRESSIVE_ATTACK, DEFAULT_ATTACK, PARRY_AND_FIGHT -> {
                 damageTaken = manageDamage(mainCharacter, enemy, attackBonus, defenseBonus);
-                notify("game.combat.enemy.damage", damageTaken);
+                gameEventNotification("game.combat.enemy.damage", damageTaken);
             }
         }
     }

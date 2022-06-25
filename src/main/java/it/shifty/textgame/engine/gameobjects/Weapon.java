@@ -10,6 +10,11 @@ public class Weapon extends ItemObject implements DamageDealer {
         super(name, description);
     }
 
+    public Weapon(String name, String description, int damage) {
+        super(name, description);
+        this.damage = damage;
+    }
+
     @Override
     public int getDamage() {
         int totalDamage = damage + bonus + malus;

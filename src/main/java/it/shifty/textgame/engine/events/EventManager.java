@@ -38,15 +38,10 @@ public class EventManager {
         users.add(listener);
     }
 
-    public void unsubscribe(EventMessageType eventType, EventListener listener) {
-        List<EventListener> users = listeners.get(eventType);
-        users.remove(listener);
-    }
-
     public void notify(EventMessageType eventType, OutputMessage message) {
         List<EventListener> users = listeners.get(eventType);
         for (EventListener listener : users) {
-            listener.update(eventType, message);
+            listener.publishEvent(eventType, message);
         }
     }
 

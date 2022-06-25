@@ -3,6 +3,7 @@ package it.shifty.textgame.engine.map;
 import it.shifty.textgame.engine.display.GameOutputMessage;
 import it.shifty.textgame.engine.exception.RoomMisplacedException;
 import it.shifty.textgame.engine.gameobjects.Character;
+import it.shifty.textgame.engine.gameobjects.Enemy;
 
 import java.util.List;
 import java.util.Optional;
@@ -83,9 +84,9 @@ public class MapEngine {
         return map[x][y] != null;
     }
 
-    public Character getEnemyInRoom(Room room) {
+    public Optional<Enemy> getEnemyInRoom(Room room) {
         Optional<Room> existingRoom = getRoom(room.getX(), room.getY());
-        return existingRoom.map(Room::getEnemy).orElse(null);
+        return Optional.ofNullable(existingRoom.map(Room::getEnemy).orElse(null));
     }
 
     public Room insertRoomInMap(Room room, int x, int y) throws RoomMisplacedException {

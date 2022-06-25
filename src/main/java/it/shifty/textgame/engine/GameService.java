@@ -3,6 +3,7 @@ import it.shifty.textgame.engine.combat.CombatEngine;
 import it.shifty.textgame.engine.display.GameOutputMessage;
 import it.shifty.textgame.engine.exception.LoseGameException;
 import it.shifty.textgame.engine.gameobjects.Character;
+import it.shifty.textgame.engine.gameobjects.Enemy;
 import it.shifty.textgame.engine.gameobjects.ItemObject;
 import it.shifty.textgame.engine.map.Direction;
 import it.shifty.textgame.engine.map.MapEngine;
@@ -11,6 +12,7 @@ import it.shifty.textgame.presentation.GameEngineLayout;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 /*
@@ -75,9 +77,16 @@ public class GameService implements GameEngineLayout {
 
     @Override
     public GameOutputMessage startCombat() {
-        isBattleMode = true;
-        combatEngine = new CombatEngine(character, mapEngine.getEnemyInRoom(character.getPosition()));
-        return new GameOutputMessage("game.combat.start");
+        //start battle only if there are enemies in the room.
+        Optional<Enemy> enemy = mapEngine.getEnemyInRoom(character.getPosition());
+        if (enemy.isPresent()) {
+            isBattleMode = true;
+            combatEngine = new CombatEngine(character, enemy.get());
+            return new GameOutputMessage("game.combat.start");
+        }
+        else {
+            return new GameOutputMessage("game.combat.no.enemies");
+        }
     }
 
     @Override
