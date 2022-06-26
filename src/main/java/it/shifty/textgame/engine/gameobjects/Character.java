@@ -87,4 +87,8 @@ public class Character extends Asset {
         }
     }
 
+    public void resetActionPoints() {
+        this.actionPointsLeft = totalActionPoints;
+    }
+
 }

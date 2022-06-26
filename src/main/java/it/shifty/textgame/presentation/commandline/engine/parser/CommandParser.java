@@ -27,12 +27,7 @@ public class CommandParser {
     public CommandParser(DisplayOutput displayOutput, GameService gameService) {
         this.gameService = gameService;
         this.displayOutput = displayOutput;
-        initializeEnums();
         itemsCensus();
-    }
-
-    private void initializeEnums() {
-
     }
 
     public static List<String> wordStandardList(String lowerCaseString) {
@@ -128,7 +123,7 @@ public class CommandParser {
 
     public void processCombatOperations(Actions action) throws CommandNotRecognizedException {
         switch (action) {
-            case TOTAL_DEFENSE, AGGRESSIVE_ATTACK, DEFAULT_ATTACK, PARRY_AND_FIGHT, INVENTORY_LOOK, EQUIP
+            case TOTAL_DEFENSE, AGGRESSIVE_ATTACK, DEFAULT_ATTACK, PARRY_AND_FIGHT, INVENTORY_LOOK, EQUIP, PASS, SHOW_AVAILABLE_ACTIONS
                     -> gameService.performCombatAction(CombatEngine.CombatActions.valueOf(action.name()));
             default -> throw new CommandNotRecognizedException();
         }

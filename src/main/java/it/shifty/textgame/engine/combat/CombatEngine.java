@@ -1,11 +1,16 @@
 package it.shifty.textgame.engine.combat;
 
+import it.shifty.textgame.engine.display.OutputMessage;
 import it.shifty.textgame.engine.events.PublisherEngine;
 import it.shifty.textgame.engine.events.majorevents.EnemyDiedEvent;
 import it.shifty.textgame.engine.exception.LoseGameException;
 import it.shifty.textgame.engine.gameobjects.Character;
+import it.shifty.textgame.presentation.commandline.engine.parser.Actions;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,7 +22,9 @@ public class CombatEngine extends PublisherEngine {
         DEFAULT_ATTACK(2,2,1),
         INVENTORY_LOOK(1, 0,0),
         PARRY_AND_FIGHT (2, 1,2),
-        EQUIP(1,0,0);
+        EQUIP(1,0,0),
+        PASS(0,0,0),
+        SHOW_AVAILABLE_ACTIONS(0,0,0);
 
         private final int actionPoint;
         private final int attackBonus;
@@ -31,6 +38,16 @@ public class CombatEngine extends PublisherEngine {
 
         public int getActionPoint() {
             return actionPoint;
+        }
+
+        public static List<String> actionNamesWithActionPointLessOrEqualThan(int actionPoint) {
+            List<String> actionNamesList = new ArrayList<>();
+            for (CombatActions action: values()) {
+                if (action.getActionPoint() <= actionPoint) {
+                    actionNamesList.add(action.name());
+                }
+            }
+            return actionNamesList;
         }
     }
 
@@ -82,6 +99,10 @@ public class CombatEngine extends PublisherEngine {
         int damageTaken;
 
         switch (actions) {
+            case SHOW_AVAILABLE_ACTIONS -> {
+                List<String> commands = CombatActions.actionNamesWithActionPointLessOrEqualThan(mainCharacter.getActionPointsLeft());
+                gameEventNotification(new OutputMessage(Actions.fromNames(commands), true));
+            }
             case AGGRESSIVE_ATTACK, DEFAULT_ATTACK, PARRY_AND_FIGHT -> {
                 if (isMainChar)
                     damageTaken = manageDamage(mainCharacter, enemy, attackBonus, defenseBonus);
@@ -92,6 +113,11 @@ public class CombatEngine extends PublisherEngine {
             case INVENTORY_LOOK -> {
                 if (isMainChar) {
                     gameEventNotification(mainCharacter.describeInventory());
+                }
+            }
+            case PASS -> {
+                if (isMainChar) {
+                    mainCharacter.resetActionPoints();
                 }
             }
         }

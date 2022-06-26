@@ -25,6 +25,8 @@ public enum Actions {
     DEFAULT_ATTACK("attacca", Operations.NONE),
     INVENTORY_LOOK("sbircia inventario", Operations.NONE),
     PARRY_AND_FIGHT("para e contrattacca", Operations.NONE),
+    PASS("passa", Operations.NONE),
+    SHOW_AVAILABLE_ACTIONS("comandi", Operations.NONE),
     EQUIP("equipaggia", Operations.NEED_TARGET);
 
     private String actionName;
@@ -54,6 +56,16 @@ public enum Actions {
                 return action;
         }
         return null;
+    }
+
+    public static List<String> fromNames(List<String> commands) {
+        List<String> result = new ArrayList<>();
+        for (Actions action: values()) {
+            if (commands.contains(action.name())) {
+                result.add(action.defaultDescription);
+            }
+        }
+        return result;
     }
 
 }

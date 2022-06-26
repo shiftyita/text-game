@@ -108,7 +108,8 @@ public class GameService extends PublisherEngine implements GameEngineLayout  {
             //check if there are still actions
             character.reduceActionPoints(actions.getActionPoint());
             combatEngine.performAction(actions, true);
-            gameEventNotification(new GameOutputMessage("character.stats.action.points", character.getActionPointsLeft()));
+            if (actions.getActionPoint() > 0) //show message only if the action use the points
+                gameEventNotification(new GameOutputMessage("character.stats.action.points", character.getActionPointsLeft()));
         } catch (Exception | LoseGameException | InsufficientActionPointsException ex) {
             gameEventNotification(new GameOutputMessage(ex.getMessage()));
         } catch (EnemyDiedEvent e) {
