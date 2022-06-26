@@ -16,7 +16,8 @@ public class CombatEngine extends PublisherEngine {
         TOTAL_DEFENSE(3, -1, 3),
         DEFAULT_ATTACK(2,2,1),
         INVENTORY_LOOK(1, 0,0),
-        PARRY_AND_FIGHT (2, 1,2);
+        PARRY_AND_FIGHT (2, 1,2),
+        EQUIP(1,0,0);
 
         private final int actionPoint;
         private final int attackBonus;
@@ -87,6 +88,11 @@ public class CombatEngine extends PublisherEngine {
                 else
                     damageTaken = manageDamage(enemy, mainCharacter, attackBonus, defenseBonus);
                 gameStatsNotification("game.combat.enemy.damage", damageTaken);
+            }
+            case INVENTORY_LOOK -> {
+                if (isMainChar) {
+                    gameEventNotification(mainCharacter.describeInventory());
+                }
             }
         }
     }

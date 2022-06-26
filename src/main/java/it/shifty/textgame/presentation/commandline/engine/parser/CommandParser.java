@@ -3,6 +3,7 @@ package it.shifty.textgame.presentation.commandline.engine.parser;
 import it.shifty.textgame.engine.GameService;
 import it.shifty.textgame.engine.combat.CombatEngine;
 import it.shifty.textgame.engine.display.GameOutputMessage;
+import it.shifty.textgame.engine.exception.CommandNotRecognizedException;
 import it.shifty.textgame.engine.gameobjects.ItemObject;
 import it.shifty.textgame.engine.map.Direction;
 import it.shifty.textgame.engine.utils.GameUtils;
@@ -91,7 +92,7 @@ public class CommandParser {
                     Actions actionCatched = Actions.fromString(wordList.get(0));
                     processCombatOperations(actionCatched);
                 }
-            } catch (Exception ex) {
+            } catch (CommandNotRecognizedException ex) {
                 return new GameOutputMessage("default.message.not.understand");
             }
             return new GameOutputMessage();
@@ -112,7 +113,7 @@ public class CommandParser {
         }
     }
 
-    public void processSingleOperation(Actions action) {
+    public void processSingleOperation(Actions action) throws CommandNotRecognizedException {
         switch (action) {
             case GO_E -> gameService.moveCharacter(Direction.EAST);
             case GO_N -> gameService.moveCharacter(Direction.NORTH);
@@ -121,14 +122,15 @@ public class CommandParser {
             case INVENTORY -> gameService.describeInventory();
             case LOOK -> gameService.describeRoom();
             case COMBAT -> gameService.startCombat();
-            default -> new GameOutputMessage("text.blank");
+            default -> throw new CommandNotRecognizedException();
         }
     }
 
-    public void processCombatOperations(Actions action) {
+    public void processCombatOperations(Actions action) throws CommandNotRecognizedException {
         switch (action) {
-            case TOTAL_DEFENSE, AGGRESSIVE_ATTACK, DEFAULT_ATTACK, PARRY_AND_FIGHT,  INVENTORY_LOOK
+            case TOTAL_DEFENSE, AGGRESSIVE_ATTACK, DEFAULT_ATTACK, PARRY_AND_FIGHT, INVENTORY_LOOK, EQUIP
                     -> gameService.performCombatAction(CombatEngine.CombactActions.valueOf(action.name()));
+            default -> throw new CommandNotRecognizedException();
         }
     }
 
