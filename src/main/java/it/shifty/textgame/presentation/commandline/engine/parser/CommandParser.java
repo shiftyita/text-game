@@ -12,8 +12,6 @@ import org.springframework.core.env.Environment;
 
 import java.util.*;
 
-import static it.shifty.textgame.presentation.commandline.engine.parser.Actions.*;
-
 public class CommandParser {
 
     static HashMap<String, Words> vocab = new HashMap<>();
@@ -74,22 +72,24 @@ public class CommandParser {
         if (lowerCaseString.isBlank())
             return new GameOutputMessage("default.message.command.missing");
         else {
-            if (!gameService.isInCombat()) {
-                wordList = CommandParser.wordStandardList(lowerCaseString);
-            }
-            else {
-                wordList = CommandParser.wordCombatList(lowerCaseString);
-            }
             try {
-                //recognize the action
-                Actions actionCatched = Actions.fromString(wordList.get(0));
-                if (actionCatched.getOperation().equals(Operations.NONE)) {
-                    processSingleOperation(actionCatched);
-                } else if (actionCatched.getOperation().equals(Operations.NEED_TARGET)) {
-                    if (wordList.size() >= 2) {
-                        wordList.remove(0);
-                        return processDoubleOperation(actionCatched, GameUtils.abstractAssetNameFormatter(String.join("", wordList)));
+                if (!gameService.isInCombat()) {
+                    wordList = CommandParser.wordStandardList(lowerCaseString);
+                    //recognize the action
+                    Actions actionCatched = Actions.fromString(wordList.get(0));
+                    if (actionCatched.getOperation().equals(Operations.NONE)) {
+                        processSingleOperation(actionCatched);
+                    } else if (actionCatched.getOperation().equals(Operations.NEED_TARGET)) {
+                        if (wordList.size() >= 2) {
+                            wordList.remove(0);
+                            return processDoubleOperation(actionCatched, GameUtils.abstractAssetNameFormatter(String.join("", wordList)));
+                        }
                     }
+                }
+                else {
+                    wordList = CommandParser.wordCombatList(lowerCaseString);
+                    Actions actionCatched = Actions.fromString(wordList.get(0));
+                    processCombatOperations(actionCatched);
                 }
             } catch (Exception ex) {
                 return new GameOutputMessage("default.message.not.understand");
@@ -121,9 +121,14 @@ public class CommandParser {
             case INVENTORY -> gameService.describeInventory();
             case LOOK -> gameService.describeRoom();
             case COMBAT -> gameService.startCombat();
-            case TOTAL_DEFENSE, AGGRESSIVE_ATTACK, DEFAULT_ATTACK, PARRY_AND_FIGHT,  INVENTORY_LOOK
-                    -> gameService.performAction(CombatEngine.CombactActions.valueOf(action.name()));
             default -> new GameOutputMessage("text.blank");
+        }
+    }
+
+    public void processCombatOperations(Actions action) {
+        switch (action) {
+            case TOTAL_DEFENSE, AGGRESSIVE_ATTACK, DEFAULT_ATTACK, PARRY_AND_FIGHT,  INVENTORY_LOOK
+                    -> gameService.performCombatAction(CombatEngine.CombactActions.valueOf(action.name()));
         }
     }
 

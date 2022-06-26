@@ -89,6 +89,10 @@ public class MapEngine {
         return Optional.ofNullable(existingRoom.map(Room::getEnemy).orElse(null));
     }
 
+    public void removeEnemyFromRoom(Room room) {
+        room.setEnemy(null);
+    }
+
     public Room insertRoomInMap(Room room, int x, int y) throws RoomMisplacedException {
         check(x,y);
         //check if it's not already occupied

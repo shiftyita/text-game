@@ -1,6 +1,7 @@
 package it.shifty.textgame.engine.combat;
 
 import it.shifty.textgame.engine.events.PublisherEngine;
+import it.shifty.textgame.engine.events.majorevents.EnemyDiedEvent;
 import it.shifty.textgame.engine.exception.LoseGameException;
 import it.shifty.textgame.engine.gameobjects.Character;
 import lombok.Getter;
@@ -26,6 +27,10 @@ public class CombatEngine extends PublisherEngine {
             this.attackBonus = attackBonus;
             this.defenseBonus =  defenseBonus;
         }
+
+        public int getActionPoint() {
+            return actionPoint;
+        }
     }
 
     private final Character mainCharacter;
@@ -38,7 +43,7 @@ public class CombatEngine extends PublisherEngine {
         this.enemy = enemy;
     }
 
-    private int manageDamage(Character attackingCharacter, Character defendingCharacter, int attackBonus, int defenseBonus) throws LoseGameException {
+    private int manageDamage(Character attackingCharacter, Character defendingCharacter, int attackBonus, int defenseBonus) throws LoseGameException, EnemyDiedEvent {
         int firstDamage = attackingCharacter.getPrimaryWeapon() != null ? (attackingCharacter.getPrimaryWeapon().getDamage() + attackBonus) : 0;
         int secondDamage = attackingCharacter.getSecondaryWeapon() != null ? (attackingCharacter.getPrimaryWeapon().getDamage() + attackBonus) : 0;
         int damageTaken = defendingCharacter.getArmor().absorbDamage(firstDamage + secondDamage - defenseBonus);
@@ -60,6 +65,7 @@ public class CombatEngine extends PublisherEngine {
             else {
                 if (defendingCharacter.isDestroyed()) {
                     gameEventNotification("game.combat.enemy.died", defendingCharacter.getName());
+                    throw new EnemyDiedEvent();
                 }
             }
         }
@@ -69,14 +75,17 @@ public class CombatEngine extends PublisherEngine {
         return damageTaken;
     }
 
-    public void performAction(CombactActions actions) throws LoseGameException {
+    public void performAction(CombactActions actions, boolean isMainChar) throws LoseGameException, EnemyDiedEvent {
         int attackBonus = actions.attackBonus;
         int defenseBonus = actions.defenseBonus;
         int damageTaken;
 
         switch (actions) {
             case AGGRESSIVE_ATTACK, DEFAULT_ATTACK, PARRY_AND_FIGHT -> {
-                damageTaken = manageDamage(mainCharacter, enemy, attackBonus, defenseBonus);
+                if (isMainChar)
+                    damageTaken = manageDamage(mainCharacter, enemy, attackBonus, defenseBonus);
+                else
+                    damageTaken = manageDamage(enemy, mainCharacter, attackBonus, defenseBonus);
                 gameStatsNotification("game.combat.enemy.damage", damageTaken);
             }
         }
