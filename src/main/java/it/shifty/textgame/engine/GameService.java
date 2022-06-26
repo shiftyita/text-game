@@ -98,7 +98,12 @@ public class GameService extends PublisherEngine implements GameEngineLayout  {
     }
 
     @Override
-    public void performCombatAction(CombatEngine.CombactActions actions) {
+    public void performEnemyAction() {
+
+    }
+
+    @Override
+    public void performCombatAction(CombatEngine.CombatActions actions) {
         try {
             //check if there are still actions
             character.reduceActionPoints(actions.getActionPoint());

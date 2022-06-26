@@ -24,7 +24,8 @@ public interface GameEngineLayout {
 
     boolean isInCombat();
 
-    void performCombatAction(CombatEngine.CombactActions actions);
+    void performCombatAction(CombatEngine.CombatActions actions);
 
+    void performEnemyAction();
 
 }

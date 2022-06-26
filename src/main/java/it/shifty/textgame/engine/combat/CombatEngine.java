@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class CombatEngine extends PublisherEngine {
 
-    public enum CombactActions {
+    public enum CombatActions {
         AGGRESSIVE_ATTACK(3,3,-1),
         TOTAL_DEFENSE(3, -1, 3),
         DEFAULT_ATTACK(2,2,1),
@@ -23,7 +23,7 @@ public class CombatEngine extends PublisherEngine {
         private final int attackBonus;
         private final int defenseBonus;
 
-        CombactActions(int actionPoint, int attackBonus, int defenseBonus) {
+        CombatActions(int actionPoint, int attackBonus, int defenseBonus) {
             this.actionPoint = actionPoint;
             this.attackBonus = attackBonus;
             this.defenseBonus =  defenseBonus;
@@ -76,7 +76,7 @@ public class CombatEngine extends PublisherEngine {
         return damageTaken;
     }
 
-    public void performAction(CombactActions actions, boolean isMainChar) throws LoseGameException, EnemyDiedEvent {
+    public void performAction(CombatActions actions, boolean isMainChar) throws LoseGameException, EnemyDiedEvent {
         int attackBonus = actions.attackBonus;
         int defenseBonus = actions.defenseBonus;
         int damageTaken;

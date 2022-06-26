@@ -129,7 +129,7 @@ public class CommandParser {
     public void processCombatOperations(Actions action) throws CommandNotRecognizedException {
         switch (action) {
             case TOTAL_DEFENSE, AGGRESSIVE_ATTACK, DEFAULT_ATTACK, PARRY_AND_FIGHT, INVENTORY_LOOK, EQUIP
-                    -> gameService.performCombatAction(CombatEngine.CombactActions.valueOf(action.name()));
+                    -> gameService.performCombatAction(CombatEngine.CombatActions.valueOf(action.name()));
             default -> throw new CommandNotRecognizedException();
         }
     }
