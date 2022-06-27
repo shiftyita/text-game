@@ -7,7 +7,7 @@
     <groupId>it.shifty.game</groupId>
     <artifactId>text-game</artifactId>
     <packaging>pom</packaging>
-    <version>0.1.8-SNAPSHOT</version>
+    <version>0.1.8</version>
 
     <modules>
         <module>event-manager</module>
