@@ -22,7 +22,7 @@
         <dependency>
             <groupId>it.shifty.game</groupId>
             <artifactId>event-manager</artifactId>
-            <version>0.1.9-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
