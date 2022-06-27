@@ -5,11 +5,11 @@
     <parent>
         <artifactId>text-game</artifactId>
         <groupId>it.shifty.game</groupId>
-        <version>0.1.8</version>
+        <version>0.1.9-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <version>0.1.8</version>
+    <version>0.1.9-SNAPSHOT</version>
 
     <artifactId>engine</artifactId>
 
@@ -22,7 +22,7 @@
         <dependency>
             <groupId>it.shifty.game</groupId>
             <artifactId>event-manager</artifactId>
-            <version>0.1.8</version>
+            <version>0.1.9-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
