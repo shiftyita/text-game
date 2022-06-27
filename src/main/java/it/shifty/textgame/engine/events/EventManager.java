@@ -10,7 +10,7 @@ import java.util.Map;
 public class EventManager {
 
     public enum EventMessageType {
-        GAME_MESSAGE
+        GAME_MESSAGE, STATS_MESSAGE
     }
 
     private static EventManager eventManagerInstance;
@@ -40,8 +40,10 @@ public class EventManager {
 
     public void notify(EventMessageType eventType, OutputMessage message) {
         List<EventListener> users = listeners.get(eventType);
-        for (EventListener listener : users) {
-            listener.publishEvent(eventType, message);
+        if (users != null) {
+            for (EventListener listener : users) {
+                listener.publishEvent(eventType, message);
+            }
         }
     }
 

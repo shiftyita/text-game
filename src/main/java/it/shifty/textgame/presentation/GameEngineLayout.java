@@ -1,8 +1,6 @@
 package it.shifty.textgame.presentation;
 
 import it.shifty.textgame.engine.combat.CombatEngine;
-import it.shifty.textgame.engine.display.GameOutputMessage;
-import it.shifty.textgame.engine.gameobjects.Character;
 import it.shifty.textgame.engine.gameobjects.ItemObject;
 import it.shifty.textgame.engine.map.Direction;
 
@@ -26,8 +24,8 @@ public interface GameEngineLayout {
 
     boolean isInCombat();
 
-    void performAction(CombatEngine.CombactActions actions);
+    void performCombatAction(CombatEngine.CombatActions actions);
 
-
+    void performEnemyAction();
 
 }

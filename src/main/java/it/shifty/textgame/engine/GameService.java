@@ -2,6 +2,8 @@ package it.shifty.textgame.engine;
 import it.shifty.textgame.engine.combat.CombatEngine;
 import it.shifty.textgame.engine.display.GameOutputMessage;
 import it.shifty.textgame.engine.events.PublisherEngine;
+import it.shifty.textgame.engine.events.majorevents.EnemyDiedEvent;
+import it.shifty.textgame.engine.exception.InsufficientActionPointsException;
 import it.shifty.textgame.engine.exception.LoseGameException;
 import it.shifty.textgame.engine.gameobjects.Character;
 import it.shifty.textgame.engine.gameobjects.Enemy;
@@ -96,12 +98,23 @@ public class GameService extends PublisherEngine implements GameEngineLayout  {
     }
 
     @Override
-    public void performAction(CombatEngine.CombactActions actions) {
+    public void performEnemyAction() {
+
+    }
+
+    @Override
+    public void performCombatAction(CombatEngine.CombatActions actions) {
         try {
-            combatEngine.performAction(actions);
-        }
-        catch (Exception | LoseGameException ex) {
+            //check if there are still actions
+            character.reduceActionPoints(actions.getActionPoint());
+            combatEngine.performAction(actions, true);
+            if (actions.getActionPoint() > 0) //show message only if the action use the points
+                gameEventNotification(new GameOutputMessage("character.stats.action.points", character.getActionPointsLeft()));
+        } catch (Exception | LoseGameException | InsufficientActionPointsException ex) {
             gameEventNotification(new GameOutputMessage(ex.getMessage()));
+        } catch (EnemyDiedEvent e) {
+            isBattleMode = false;
+            mapEngine.removeEnemyFromRoom(character.getPosition());
         }
     }
 }

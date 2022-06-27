@@ -14,12 +14,19 @@ public class OutputMessage {
 
     private String message;
 
+    private boolean mustHaveSeparator = false;
+
     public OutputMessage() {
         this.multiMessage = new ArrayList<>();
     }
 
     public OutputMessage(List<String> multiMessage) {
         this.multiMessage = multiMessage;
+    }
+
+    public OutputMessage(List<String> multiMessage, boolean mustHaveSeparator) {
+        this.multiMessage = multiMessage;
+        this.mustHaveSeparator = mustHaveSeparator;
     }
 
     public OutputMessage(String message) {

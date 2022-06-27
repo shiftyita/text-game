@@ -74,13 +74,21 @@ public class Character extends Asset {
         return new GameOutputMessage(output);
     }
 
+    private boolean canDoAction(int actionPoint) {
+        return (actionPointsLeft - actionPoint >=0);
+    }
+
     public void reduceActionPoints(int actionPoint) throws InsufficientActionPointsException {
-        if (actionPointsLeft - actionPoint >= 0) {
+        if (canDoAction(actionPoint)) {
             actionPointsLeft = actionPointsLeft - actionPoint;
         }
         else {
             throw new InsufficientActionPointsException("exception.insufficient.action.point");
         }
+    }
+
+    public void resetActionPoints() {
+        this.actionPointsLeft = totalActionPoints;
     }
 
 }
