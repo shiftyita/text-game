@@ -15,7 +15,6 @@ public class GameServiceBuilder implements GameBuilder {
     private MapEngine mapEngine;
     private Character character;
     private List<Character> characterList;
-
     private HashMap<String, ItemObject> itemsInGame;
 
     @Override
