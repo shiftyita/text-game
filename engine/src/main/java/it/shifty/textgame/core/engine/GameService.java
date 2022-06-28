@@ -1,5 +1,6 @@
 package it.shifty.textgame.core.engine;
 
+import it.shifty.textgame.core.dto.LocalizedMessage;
 import it.shifty.textgame.core.engine.combat.CombatEngine;
 import it.shifty.textgame.core.engine.exception.InsufficientActionPointsException;
 import it.shifty.textgame.core.engine.exception.LoseGameException;
@@ -11,7 +12,6 @@ import it.shifty.textgame.core.engine.map.MapEngine;
 import it.shifty.textgame.core.engine.map.Room;
 import it.shifty.textgame.core.events.Publisher;
 import it.shifty.textgame.core.presentation.GameEngineLayout;
-import it.shifty.textgame.core.dto.GameOutputMessage;
 import it.shifty.textgame.events.majorevents.EnemyDiedEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -50,8 +50,8 @@ public class GameService implements GameEngineLayout  {
         return itemsInGame;
     }
 
-    public GameOutputMessage showIntro() {
-        return new GameOutputMessage("game.intro");
+    public LocalizedMessage showIntro() {
+        return new LocalizedMessage("game.intro");
     }
 
     @Override
@@ -92,10 +92,10 @@ public class GameService implements GameEngineLayout  {
             isBattleMode = true;
             combatEngine.setMainCharacter(character);
             combatEngine.setEnemy(enemy.get());
-            publisher.gameEventNotification(new GameOutputMessage("game.combat.start"));
+            publisher.gameEventNotification(new LocalizedMessage("game.combat.start"));
         }
         else {
-            publisher.gameEventNotification(new GameOutputMessage("game.combat.no.enemies"));
+            publisher.gameEventNotification(new LocalizedMessage("game.combat.no.enemies"));
         }
     }
 
@@ -116,9 +116,9 @@ public class GameService implements GameEngineLayout  {
             character.reduceActionPoints(actions.getActionPoint());
             combatEngine.performAction(actions, true);
             if (actions.getActionPoint() > 0) //show message only if the action use the points
-                publisher.gameEventNotification(new GameOutputMessage("character.stats.action.points", character.getActionPointsLeft()));
+                publisher.gameEventNotification(new LocalizedMessage("character.stats.action.points", character.getActionPointsLeft()));
         } catch (Exception | LoseGameException | InsufficientActionPointsException ex) {
-            publisher.gameEventNotification(new GameOutputMessage(ex.getMessage()));
+            publisher.gameEventNotification(new LocalizedMessage(ex.getMessage()));
         } catch (EnemyDiedEvent e) {
             isBattleMode = false;
             mapEngine.removeEnemyFromRoom(character.getPosition());

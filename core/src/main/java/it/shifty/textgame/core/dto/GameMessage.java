@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class OutputMessage {
+public class GameMessage {
 
     private List<String> multiMessage;
 
@@ -16,20 +16,20 @@ public class OutputMessage {
 
     private boolean mustHaveSeparator = false;
 
-    public OutputMessage() {
+    public GameMessage() {
         this.multiMessage = new ArrayList<>();
     }
 
-    public OutputMessage(List<String> multiMessage) {
+    public GameMessage(List<String> multiMessage) {
         this.multiMessage = multiMessage;
     }
 
-    public OutputMessage(List<String> multiMessage, boolean mustHaveSeparator) {
+    public GameMessage(List<String> multiMessage, boolean mustHaveSeparator) {
         this.multiMessage = multiMessage;
         this.mustHaveSeparator = mustHaveSeparator;
     }
 
-    public OutputMessage(String message) {
+    public GameMessage(String message) {
         this.message = message;
     }
 

@@ -1,12 +1,12 @@
 package it.shifty.textgame.core.engine.combat;
 
+import it.shifty.textgame.core.dto.GameMessage;
+import it.shifty.textgame.core.dto.LocalizedMessage;
 import it.shifty.textgame.core.engine.exception.LoseGameException;
 import it.shifty.textgame.core.engine.gameobjects.Character;
 import it.shifty.textgame.core.engine.gameobjects.Enemy;
 import it.shifty.textgame.core.events.Publisher;
 import it.shifty.textgame.core.presentation.commandline.engine.parser.Actions;
-import it.shifty.textgame.core.dto.OutputMessage;
-import it.shifty.textgame.events.PublisherEngine;
 import it.shifty.textgame.events.majorevents.EnemyDiedEvent;
 import lombok.Getter;
 import lombok.Setter;
@@ -78,10 +78,10 @@ public class CombatEngine {
         int damageTaken = defendingCharacter.getArmor().absorbDamage(firstDamage + secondDamage - defenseBonus);
         if (damageTaken > 0) {
             if (!defendingCharacter.isMainCharacter()) {
-                publisher.gameEventNotification("game.combat.damage.enemy.suffer");
+                publisher.gameEventNotification(new LocalizedMessage("game.combat.damage.enemy.suffer"));
             }
             else {
-                publisher.gameEventNotification("game.combat.character.take.damage");
+                publisher.gameEventNotification(new LocalizedMessage("game.combat.character.take.damage"));
             }
 
             defendingCharacter.absorbDamage(damageTaken);
@@ -93,13 +93,13 @@ public class CombatEngine {
             }
             else {
                 if (defendingCharacter.isDestroyed()) {
-                    publisher.gameEventNotification("game.combat.enemy.died", defendingCharacter.getName());
+                    publisher.gameEventNotification(new LocalizedMessage("game.combat.enemy.died", defendingCharacter.getName()));
                     throw new EnemyDiedEvent();
                 }
             }
         }
         else {
-            publisher.gameEventNotification("game.combat.damage.enemy.absorbed");
+            publisher.gameEventNotification(new LocalizedMessage("game.combat.damage.enemy.absorbed"));
         }
         return damageTaken;
     }
@@ -112,14 +112,14 @@ public class CombatEngine {
         switch (actions) {
             case SHOW_AVAILABLE_ACTIONS -> {
                 List<String> commands = CombatActions.actionNamesWithActionPointLessOrEqualThan(mainCharacter.getActionPointsLeft());
-                publisher.gameEventNotification(new OutputMessage(Actions.fromNames(commands), true));
+                publisher.gameEventNotification(new GameMessage(Actions.fromNames(commands), true));
             }
             case AGGRESSIVE_ATTACK, DEFAULT_ATTACK, PARRY_AND_FIGHT -> {
                 if (isMainChar)
                     damageTaken = manageDamage(mainCharacter, enemy, attackBonus, defenseBonus);
                 else
                     damageTaken = manageDamage(enemy, mainCharacter, attackBonus, defenseBonus);
-                publisher.gameStatsNotification("game.combat.enemy.damage", damageTaken);
+                publisher.gameStatsNotification(new LocalizedMessage("game.combat.enemy.damage", damageTaken));
             }
             case INVENTORY_LOOK -> {
                 if (isMainChar) {

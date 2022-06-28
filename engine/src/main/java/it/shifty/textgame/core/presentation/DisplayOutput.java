@@ -1,7 +1,7 @@
 package it.shifty.textgame.core.presentation;
 
-import it.shifty.textgame.core.dto.OutputMessage;
+import it.shifty.textgame.core.dto.GameMessage;
 
 public interface DisplayOutput {
-    void printTextOutput(OutputMessage message);
+    void printTextOutput(GameMessage message);
 }

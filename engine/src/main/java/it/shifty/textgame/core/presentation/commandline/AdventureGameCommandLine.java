@@ -1,9 +1,9 @@
 package it.shifty.textgame.core.presentation.commandline;
 
+import it.shifty.textgame.core.dto.LocalizedMessage;
 import it.shifty.textgame.core.engine.GameService;
 import it.shifty.textgame.core.presentation.MenuGameLayout;
 import it.shifty.textgame.core.presentation.commandline.engine.parser.CommandParser;
-import it.shifty.textgame.core.dto.GameOutputMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
@@ -68,7 +68,7 @@ public class AdventureGameCommandLine implements CommandLineRunner, MenuGameLayo
         try {
             BufferedReader in;
             String input;
-            GameOutputMessage output = new GameOutputMessage();
+            LocalizedMessage output = new LocalizedMessage();
             in = new BufferedReader(new InputStreamReader(System.in));
             commandParser.showMessage(gameService.showIntro());
             do {

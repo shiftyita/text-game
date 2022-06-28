@@ -8,13 +8,13 @@ import java.util.List;
 
 @Getter
 @Setter
-public class GameOutputMessage extends OutputMessage {
+public class LocalizedMessage extends GameMessage {
 
-    public GameOutputMessage() {
+    public LocalizedMessage() {
         super();
     }
 
-    public GameOutputMessage(List<String> multiMessage) {
+    public LocalizedMessage(List<String> multiMessage) {
         super(LocaleUtils.localizeString(multiMessage));
     }
 
@@ -22,11 +22,11 @@ public class GameOutputMessage extends OutputMessage {
         super.addMessage(LocaleUtils.localizeString(message));
     }
 
-    public GameOutputMessage(String message) {
+    public LocalizedMessage(String message) {
         super(LocaleUtils.localizeString(message));
     }
 
-    public GameOutputMessage(String message, Object... params) {
+    public LocalizedMessage(String message, Object... params) {
         super(String.format(LocaleUtils.localizeString(message), params));
     }
 

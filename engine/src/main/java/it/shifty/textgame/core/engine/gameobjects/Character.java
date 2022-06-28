@@ -1,8 +1,8 @@
 package it.shifty.textgame.core.engine.gameobjects;
 
+import it.shifty.textgame.core.dto.LocalizedMessage;
 import it.shifty.textgame.core.engine.exception.InsufficientActionPointsException;
 import it.shifty.textgame.core.engine.map.Room;
-import it.shifty.textgame.core.dto.GameOutputMessage;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -47,29 +47,29 @@ public class Character extends Asset {
         this.actionPointsLeft = this.totalActionPoints;
     }
 
-    public GameOutputMessage addItemInInventory(ItemObject itemObject) {
+    public LocalizedMessage addItemInInventory(ItemObject itemObject) {
         inventory.add(itemObject);
         List<String> output = new ArrayList<>();
         output.add(itemObject.getKeyName());
         output.add("items.add.inventory");
-        return new GameOutputMessage(output);
+        return new LocalizedMessage(output);
     }
 
-    public GameOutputMessage describeRoom() {
-        return new GameOutputMessage(position.getDescription());
+    public LocalizedMessage describeRoom() {
+        return new LocalizedMessage(position.getDescription());
     }
 
-    public GameOutputMessage describeInventory() {
+    public LocalizedMessage describeInventory() {
         List<String> output = new ArrayList<>();
         if (inventory.isEmpty()) {
             output.add("character.inventory.empty");
-            return new GameOutputMessage(output);
+            return new LocalizedMessage(output);
         }
         output.add("character.inventory.start.description");
         for (ItemObject item : inventory) {
             output.add(item.getDescription());
         }
-        return new GameOutputMessage(output);
+        return new LocalizedMessage(output);
     }
 
     private boolean canDoAction(int actionPoint) {

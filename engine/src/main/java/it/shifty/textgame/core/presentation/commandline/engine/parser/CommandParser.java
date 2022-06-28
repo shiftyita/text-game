@@ -1,5 +1,6 @@
 package it.shifty.textgame.core.presentation.commandline.engine.parser;
 
+import it.shifty.textgame.core.dto.LocalizedMessage;
 import it.shifty.textgame.core.engine.GameService;
 import it.shifty.textgame.core.engine.combat.CombatEngine;
 import it.shifty.textgame.core.engine.exception.CommandNotRecognizedException;
@@ -7,7 +8,6 @@ import it.shifty.textgame.core.engine.gameobjects.ItemObject;
 import it.shifty.textgame.core.engine.map.Direction;
 import it.shifty.textgame.core.engine.utils.GameUtils;
 import it.shifty.textgame.core.presentation.DisplayOutput;
-import it.shifty.textgame.core.dto.GameOutputMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 
@@ -62,11 +62,11 @@ public class CommandParser {
         vocab.put(name, Words.NOUN);
     }
 
-    public GameOutputMessage executeCommand(String input) {
+    public LocalizedMessage executeCommand(String input) {
         List<String> wordList;
         String lowerCaseString = input.toLowerCase();
         if (lowerCaseString.isBlank())
-            return new GameOutputMessage("default.message.command.missing");
+            return new LocalizedMessage("default.message.command.missing");
         else {
             try {
                 if (!gameService.isInCombat()) {
@@ -88,23 +88,23 @@ public class CommandParser {
                     processCombatOperations(actionCatched);
                 }
             } catch (CommandNotRecognizedException ex) {
-                return new GameOutputMessage("default.message.not.understand");
+                return new LocalizedMessage("default.message.not.understand");
             }
-            return new GameOutputMessage();
+            return new LocalizedMessage();
         }
     }
 
-    public GameOutputMessage processDoubleOperation(Actions actions, String itemName) {
+    public LocalizedMessage processDoubleOperation(Actions actions, String itemName) {
         if (vocab.containsKey(itemName)) {
             ItemObject item = gameService.getItemGivenName(itemName);
             switch (actions) {
                 case TAKE:
                     gameService.addItemInInventory(item);
                 default:
-                    return new GameOutputMessage("text.blank");
+                    return new LocalizedMessage("text.blank");
             }
         } else {
-            return new GameOutputMessage("default.message.not.understand");
+            return new LocalizedMessage("default.message.not.understand");
         }
     }
 
@@ -129,7 +129,7 @@ public class CommandParser {
         }
     }
 
-    public void showMessage(GameOutputMessage output) {
+    public void showMessage(LocalizedMessage output) {
         displayOutput.printTextOutput(output);
     }
 }

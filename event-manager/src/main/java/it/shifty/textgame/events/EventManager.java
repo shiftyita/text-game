@@ -1,6 +1,6 @@
 package it.shifty.textgame.events;
 
-import it.shifty.textgame.core.dto.OutputMessage;
+import it.shifty.textgame.core.dto.GameMessage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,7 +38,7 @@ public class EventManager {
         users.add(listener);
     }
 
-    public void notify(EventMessageType eventType, OutputMessage message) {
+    public void notify(EventMessageType eventType, GameMessage message) {
         List<EventListener> users = listeners.get(eventType);
         if (users != null) {
             for (EventListener listener : users) {

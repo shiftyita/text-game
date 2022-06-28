@@ -1,9 +1,9 @@
 package it.shifty.textgame.core.engine.display;
 
+import it.shifty.textgame.core.dto.GameMessage;
 import it.shifty.textgame.core.presentation.DisplayOutput;
 import it.shifty.textgame.events.EventListener;
 import it.shifty.textgame.events.EventManager;
-import it.shifty.textgame.core.dto.OutputMessage;
 
 public class SysOutLocaleDisplay implements DisplayOutput, EventListener {
 
@@ -12,7 +12,7 @@ public class SysOutLocaleDisplay implements DisplayOutput, EventListener {
     }
 
     @Override
-    public void printTextOutput(OutputMessage message) {
+    public void printTextOutput(GameMessage message) {
         if (message.getMessage() != null) {
             System.out.println(message.getMessage());
         } else {
@@ -27,7 +27,7 @@ public class SysOutLocaleDisplay implements DisplayOutput, EventListener {
     }
 
     @Override
-    public void publishEvent(EventManager.EventMessageType eventType, OutputMessage message) {
+    public void publishEvent(EventManager.EventMessageType eventType, GameMessage message) {
         printTextOutput(message);
     }
 }

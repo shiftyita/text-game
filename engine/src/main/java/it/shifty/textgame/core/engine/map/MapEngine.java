@@ -1,9 +1,9 @@
 package it.shifty.textgame.core.engine.map;
 
+import it.shifty.textgame.core.dto.LocalizedMessage;
 import it.shifty.textgame.core.engine.exception.RoomMisplacedException;
 import it.shifty.textgame.core.engine.gameobjects.Character;
 import it.shifty.textgame.core.engine.gameobjects.Enemy;
-import it.shifty.textgame.core.dto.GameOutputMessage;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +21,7 @@ public class MapEngine {
         calculateRoomSurroundigs();
     }
 
-    public GameOutputMessage moveCharacter(Character character, Direction direction) {
+    public LocalizedMessage moveCharacter(Character character, Direction direction) {
         Room currentRoom = character.getPosition();
         switch (direction) {
             case NORTH:
@@ -41,13 +41,13 @@ public class MapEngine {
                     return moveCharacterTo(character, currentRoom.getE());
                 break;
             default:
-                return new GameOutputMessage("character.mapengine.donot.understand");
+                return new LocalizedMessage("character.mapengine.donot.understand");
         }
-        return new GameOutputMessage("character.mapengine.cannot.go");
+        return new LocalizedMessage("character.mapengine.cannot.go");
     }
 
-    private GameOutputMessage moveCharacterTo(Character character, Room destRoom) {
-        GameOutputMessage message = new GameOutputMessage();
+    private LocalizedMessage moveCharacterTo(Character character, Room destRoom) {
+        LocalizedMessage message = new LocalizedMessage();
         boolean canMove = false;
         String msg = "";
         if (destRoom instanceof RoomClosedWithKey) {
