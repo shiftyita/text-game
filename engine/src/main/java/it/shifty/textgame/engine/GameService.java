@@ -1,5 +1,6 @@
 package it.shifty.textgame.engine;
 
+import it.shifty.textgame.GameEngineLayout;
 import it.shifty.textgame.core.dto.LocalizedMessage;
 import it.shifty.textgame.core.events.Publisher;
 import it.shifty.textgame.engine.combat.CombatEngine;
@@ -12,7 +13,6 @@ import it.shifty.textgame.engine.map.Direction;
 import it.shifty.textgame.engine.map.MapEngine;
 import it.shifty.textgame.engine.map.Room;
 import it.shifty.textgame.events.majorevents.EnemyDiedEvent;
-import it.shifty.textgame.main.presentation.commandline.GameEngineLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;

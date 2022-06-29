@@ -1,4 +1,4 @@
-package it.shifty.textgame.main.presentation.commandline.engine.parser;
+package it.shifty.textgame.commandline.engine;
 
 import it.shifty.textgame.core.dto.LocalizedMessage;
 import it.shifty.textgame.core.presentation.DisplayOutput;
@@ -8,6 +8,9 @@ import it.shifty.textgame.engine.exception.CommandNotRecognizedException;
 import it.shifty.textgame.engine.gameobjects.ItemObject;
 import it.shifty.textgame.engine.map.Direction;
 import it.shifty.textgame.engine.utils.GameUtils;
+import it.shifty.textgame.presentation.commandline.engine.parser.Actions;
+import it.shifty.textgame.presentation.commandline.engine.parser.Operations;
+import it.shifty.textgame.presentation.commandline.engine.parser.Words;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 

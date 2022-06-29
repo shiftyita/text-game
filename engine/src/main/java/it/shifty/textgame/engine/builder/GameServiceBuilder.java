@@ -1,11 +1,11 @@
 package it.shifty.textgame.engine.builder;
 
+import it.shifty.textgame.GameBuilder;
 import it.shifty.textgame.engine.GameService;
 import it.shifty.textgame.engine.gameobjects.Character;
 import it.shifty.textgame.engine.gameobjects.ItemObject;
 import it.shifty.textgame.engine.map.MapEngine;
 import it.shifty.textgame.engine.map.Room;
-import it.shifty.textgame.main.presentation.commandline.GameBuilder;
 
 import java.util.HashMap;
 import java.util.List;

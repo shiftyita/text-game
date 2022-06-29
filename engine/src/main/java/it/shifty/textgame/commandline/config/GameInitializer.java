@@ -1,5 +1,6 @@
-package it.shifty.textgame.main.presentation.commandline.configuration;
+package it.shifty.textgame.commandline.config;
 
+import it.shifty.textgame.GameBuilder;
 import it.shifty.textgame.engine.exception.RoomMisplacedException;
 import it.shifty.textgame.engine.gameobjects.Character;
 import it.shifty.textgame.engine.gameobjects.*;
@@ -7,7 +8,6 @@ import it.shifty.textgame.engine.map.Key;
 import it.shifty.textgame.engine.map.MapEngine;
 import it.shifty.textgame.engine.map.Room;
 import it.shifty.textgame.engine.map.RoomClosedWithKey;
-import it.shifty.textgame.main.presentation.commandline.GameBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;

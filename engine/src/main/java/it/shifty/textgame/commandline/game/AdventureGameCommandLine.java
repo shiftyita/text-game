@@ -1,8 +1,9 @@
-package it.shifty.textgame.main.presentation.commandline;
+package it.shifty.textgame.commandline.game;
 
+import it.shifty.textgame.MenuGameLayout;
+import it.shifty.textgame.commandline.engine.CommandParser;
 import it.shifty.textgame.core.dto.LocalizedMessage;
 import it.shifty.textgame.engine.GameService;
-import it.shifty.textgame.main.presentation.commandline.engine.parser.CommandParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;

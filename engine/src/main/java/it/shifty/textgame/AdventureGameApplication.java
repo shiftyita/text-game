@@ -1,4 +1,4 @@
-package it.shifty.textgame.main;
+package it.shifty.textgame;
 
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;

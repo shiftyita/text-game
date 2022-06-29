@@ -7,7 +7,7 @@ import it.shifty.textgame.engine.exception.LoseGameException;
 import it.shifty.textgame.engine.gameobjects.Character;
 import it.shifty.textgame.engine.gameobjects.Enemy;
 import it.shifty.textgame.events.majorevents.EnemyDiedEvent;
-import it.shifty.textgame.main.presentation.commandline.engine.parser.Actions;
+import it.shifty.textgame.presentation.commandline.engine.parser.Actions;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;

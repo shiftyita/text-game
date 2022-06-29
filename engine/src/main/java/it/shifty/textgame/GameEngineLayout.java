@@ -1,4 +1,4 @@
-package it.shifty.textgame.main.presentation.commandline;
+package it.shifty.textgame;
 
 import it.shifty.textgame.engine.combat.CombatEngine;
 import it.shifty.textgame.engine.gameobjects.ItemObject;

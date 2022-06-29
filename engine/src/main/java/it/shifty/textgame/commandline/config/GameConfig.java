@@ -1,5 +1,6 @@
-package it.shifty.textgame.main.presentation.commandline.configuration;
+package it.shifty.textgame.commandline.config;
 
+import it.shifty.textgame.commandline.engine.CommandParser;
 import it.shifty.textgame.core.LocaleUtils;
 import it.shifty.textgame.core.events.Publisher;
 import it.shifty.textgame.core.presentation.DisplayOutput;
@@ -7,7 +8,6 @@ import it.shifty.textgame.engine.GameService;
 import it.shifty.textgame.engine.builder.GameServiceBuilder;
 import it.shifty.textgame.engine.display.SysOutLocaleDisplay;
 import it.shifty.textgame.events.PublisherEngine;
-import it.shifty.textgame.main.presentation.commandline.engine.parser.CommandParser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
