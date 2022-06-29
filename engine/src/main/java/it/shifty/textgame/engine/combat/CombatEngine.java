@@ -50,9 +50,19 @@ public class CombatEngine {
 
         public static List<String> actionNamesWithActionPointLessOrEqualThan(int actionPoint) {
             List<String> actionNamesList = new ArrayList<>();
-            for (CombatActions action: values()) {
+            for (CombatActions action : values()) {
                 if (action.getActionPoint() <= actionPoint) {
                     actionNamesList.add(action.name());
+                }
+            }
+            return actionNamesList;
+        }
+
+        public static List<CombatActions> getAttackCombatActions() {
+            List<CombatActions> actionNamesList = new ArrayList<>();
+            for (CombatActions action : values()) {
+                if (action.attackBonus > 0) {
+                    actionNamesList.add(action);
                 }
             }
             return actionNamesList;
