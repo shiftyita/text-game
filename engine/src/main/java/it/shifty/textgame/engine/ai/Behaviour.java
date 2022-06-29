@@ -2,7 +2,11 @@ package it.shifty.textgame.engine.ai;
 
 import it.shifty.textgame.engine.combat.CombatEngine;
 
-public interface Behaviour {
+import java.util.List;
 
-    CombatEngine.CombatActions getCombatAction();
+public abstract class Behaviour {
+
+    protected final List<CombatEngine.CombatActions> combatActions = CombatEngine.CombatActions.getAttackCombatActions();
+
+    public abstract CombatEngine.CombatActions getCombatAction();
 }
