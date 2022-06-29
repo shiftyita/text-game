@@ -1,14 +1,12 @@
 package it.shifty.textgame.core.events;
 
-import it.shifty.textgame.core.dto.GameOutputMessage;
-import it.shifty.textgame.core.dto.OutputMessage;
+import it.shifty.textgame.core.dto.GameMessage;
 
 public interface Publisher {
-    void gameEventNotification(String message, Object... params);
 
-    void gameEventNotification(OutputMessage message);
+    void gameEventNotification(GameMessage message);
 
-    void gameStatsNotification(String message, Object... params);
+    void gameStatsNotification(GameMessage message);
 }
 
 
