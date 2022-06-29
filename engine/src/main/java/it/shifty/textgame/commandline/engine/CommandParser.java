@@ -66,34 +66,40 @@ public class CommandParser {
     }
 
     public LocalizedMessage executeCommand(String input) {
-        List<String> wordList;
         String lowerCaseString = input.toLowerCase();
         if (lowerCaseString.isBlank())
             return new LocalizedMessage("default.message.command.missing");
         else {
             try {
-                if (!gameService.isInCombat()) {
-                    wordList = CommandParser.wordStandardList(lowerCaseString);
-                    //recognize the action
-                    Actions actionCatched = Actions.fromString(wordList.get(0));
-                    if (actionCatched.getOperation().equals(Operations.NONE)) {
-                        processSingleOperation(actionCatched);
-                    } else if (actionCatched.getOperation().equals(Operations.NEED_TARGET)) {
-                        if (wordList.size() >= 2) {
-                            wordList.remove(0);
-                            return processDoubleOperation(actionCatched, GameUtils.abstractAssetNameFormatter(String.join("", wordList)));
-                        }
-                    }
-                }
-                else {
-                    wordList = CommandParser.wordCombatList(lowerCaseString);
-                    Actions actionCatched = Actions.fromString(wordList.get(0));
-                    processCombatOperations(actionCatched);
+                if (gameService.isInCombat()) {
+                    processCombatCommands(lowerCaseString);
+                } else {
+                    processStandardCommands(lowerCaseString);
                 }
             } catch (CommandNotRecognizedException ex) {
                 return new LocalizedMessage("default.message.not.understand");
             }
             return new LocalizedMessage();
+        }
+    }
+
+    private void processCombatCommands(String lowerCaseCommandString) throws CommandNotRecognizedException {
+        List<String> wordList = CommandParser.wordCombatList(lowerCaseCommandString);
+        Actions actionCaught = Actions.fromString(wordList.get(0));
+        processCombatOperations(actionCaught);
+    }
+
+    private void processStandardCommands(String lowerCaseCommandString) throws CommandNotRecognizedException {
+        List<String> wordList = CommandParser.wordStandardList(lowerCaseCommandString);
+        //recognize the action
+        Actions actionCaught = Actions.fromString(wordList.get(0));
+        if (actionCaught.getOperation().equals(Operations.NONE)) {
+            processSingleOperation(actionCaught);
+        } else if (actionCaught.getOperation().equals(Operations.NEED_TARGET)) {
+            if (wordList.size() >= 2) {
+                wordList.remove(0);
+                processDoubleOperation(actionCaught, GameUtils.abstractAssetNameFormatter(String.join("", wordList)));
+            }
         }
     }
 
