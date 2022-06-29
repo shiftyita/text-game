@@ -1,6 +1,7 @@
 package it.shifty.textgame.engine;
 
 import it.shifty.textgame.GameEngineLayout;
+import it.shifty.textgame.core.dto.GameMessage;
 import it.shifty.textgame.core.dto.LocalizedMessage;
 import it.shifty.textgame.core.events.Publisher;
 import it.shifty.textgame.engine.combat.CombatEngine;
@@ -106,7 +107,25 @@ public class GameService implements GameEngineLayout  {
 
     @Override
     public void performEnemyAction() {
+        Enemy enemy = (Enemy) combatEngine.getEnemy();
+        try {
+            do {
+                CombatEngine.CombatActions enemyCombatAction = enemy.getAppropriateCombatAction();
+                enemy.reduceActionPoints(enemyCombatAction.getActionPoint());
+                combatEngine.performAction(enemyCombatAction, false);
+            } while (enemy.getActionPointsLeft() > 0);
+        } catch (EnemyDiedEvent | InsufficientActionPointsException e) {
+            //the enemy cannot die in its turn.
+        } catch (LoseGameException ex) {
+            publisher.gameEventNotification(new GameMessage(ex.getMessage()));
+        }
+    }
 
+    @Override
+    public int getCharacterHealth() {
+        int health = character.getHealth();
+        publisher.gameEventNotification(new LocalizedMessage("character.stats.health", health));
+        return health;
     }
 
     @Override

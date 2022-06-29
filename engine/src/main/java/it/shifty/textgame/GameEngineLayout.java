@@ -28,4 +28,6 @@ public interface GameEngineLayout {
 
     void performEnemyAction();
 
+    int getCharacterHealth();
+
 }

@@ -2,6 +2,7 @@ package it.shifty.textgame.engine.gameobjects;
 
 import it.shifty.textgame.engine.ai.Behaviour;
 import it.shifty.textgame.engine.ai.DefaultBehaviour;
+import it.shifty.textgame.engine.combat.CombatEngine;
 
 public class Enemy extends Character {
 
@@ -16,5 +17,9 @@ public class Enemy extends Character {
 
     public void setBehaviour(Behaviour behaviour) {
         this.behaviour = behaviour;
+    }
+
+    public CombatEngine.CombatActions getAppropriateCombatAction() {
+        return behaviour.getCombatAction();
     }
 }

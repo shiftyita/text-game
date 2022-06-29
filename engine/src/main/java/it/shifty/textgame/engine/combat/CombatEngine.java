@@ -99,7 +99,11 @@ public class CombatEngine {
             }
         }
         else {
-            publisher.gameEventNotification(new LocalizedMessage("game.combat.damage.enemy.absorbed"));
+            if (defendingCharacter.isMainCharacter()) {
+                publisher.gameEventNotification(new LocalizedMessage("game.combat.damage.character.absorbed"));
+            } else {
+                publisher.gameEventNotification(new LocalizedMessage("game.combat.damage.enemy.absorbed"));
+            }
         }
         return damageTaken;
     }
@@ -115,11 +119,13 @@ public class CombatEngine {
                 publisher.gameEventNotification(new GameMessage(Actions.fromNames(commands), true));
             }
             case AGGRESSIVE_ATTACK, DEFAULT_ATTACK, PARRY_AND_FIGHT -> {
-                if (isMainChar)
+                if (isMainChar) {
                     damageTaken = manageDamage(mainCharacter, enemy, attackBonus, defenseBonus);
-                else
+                    publisher.gameStatsNotification(new LocalizedMessage("game.combat.enemy.damage", damageTaken));
+                } else {
                     damageTaken = manageDamage(enemy, mainCharacter, attackBonus, defenseBonus);
-                publisher.gameStatsNotification(new LocalizedMessage("game.combat.enemy.damage", damageTaken));
+                    publisher.gameEventNotification(new LocalizedMessage("game.combat.character.damage", damageTaken));
+                }
             }
             case INVENTORY_LOOK -> {
                 if (isMainChar) {

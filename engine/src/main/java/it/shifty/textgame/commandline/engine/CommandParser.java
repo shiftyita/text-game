@@ -16,6 +16,8 @@ import org.springframework.core.env.Environment;
 
 import java.util.*;
 
+import static it.shifty.textgame.presentation.commandline.engine.parser.Actions.PASS;
+
 public class CommandParser {
 
     static HashMap<String, Words> vocab = new HashMap<>();
@@ -87,6 +89,12 @@ public class CommandParser {
         List<String> wordList = CommandParser.wordCombatList(lowerCaseCommandString);
         Actions actionCaught = Actions.fromString(wordList.get(0));
         processCombatOperations(actionCaught);
+        if (actionCaught.equals(PASS))
+            processEnemyTurn();
+    }
+
+    private void processEnemyTurn() {
+        gameService.performEnemyAction();
     }
 
     private void processStandardCommands(String lowerCaseCommandString) throws CommandNotRecognizedException {
@@ -126,6 +134,7 @@ public class CommandParser {
             case INVENTORY -> gameService.describeInventory();
             case LOOK -> gameService.describeRoom();
             case COMBAT -> gameService.startCombat();
+            case HEALTH -> gameService.getCharacterHealth();
             default -> throw new CommandNotRecognizedException();
         }
     }

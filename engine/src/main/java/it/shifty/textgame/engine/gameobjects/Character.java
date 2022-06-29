@@ -24,9 +24,11 @@ public class Character extends Asset {
     private int actionPointsLeft;
     private int totalActionPoints;
 
-    public Character(String name, String description) {
+    private Character(String name, String description) {
         super(name, description, 100);
         this.inventory = new ArrayList<>();
+        this.totalActionPoints = DEFAULT_ACTION_POINT;
+        this.actionPointsLeft = this.totalActionPoints;
     }
 
     public Character(String name, String description, boolean mainCharacter) {
@@ -37,8 +39,6 @@ public class Character extends Asset {
     public Character(String name, String description, boolean mainCharacter, Room position) {
         this(name, description, mainCharacter);
         this.position = position;
-        this.totalActionPoints = DEFAULT_ACTION_POINT;
-        this.actionPointsLeft = this.totalActionPoints;
     }
 
     public Character(String name, String description, boolean mainCharacter, Room position, int actionPoint) {

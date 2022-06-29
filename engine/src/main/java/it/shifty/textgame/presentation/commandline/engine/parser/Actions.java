@@ -29,7 +29,8 @@ public enum Actions {
     PARRY_AND_FIGHT("para e contrattacca", Operations.NONE),
     PASS("passa", Operations.NONE),
     SHOW_AVAILABLE_ACTIONS("comandi", Operations.NONE),
-    EQUIP("equipaggia", Operations.NEED_TARGET);
+    EQUIP("equipaggia", Operations.NEED_TARGET),
+    HEALTH("salute", Operations.NONE);
 
     private String actionName;
     private List<String> synonyms = new ArrayList<>();
