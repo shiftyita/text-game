@@ -1,5 +1,7 @@
 package it.shifty.textgame.presentation.commandline.engine.parser;
 
+import it.shifty.textgame.engine.exception.CommandNotRecognizedException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,12 +52,12 @@ public enum Actions {
         return operation;
     }
 
-    public static Actions fromString(String description) {
-        for (Actions action: values()) {
+    public static Actions fromString(String description) throws CommandNotRecognizedException {
+        for (Actions action : values()) {
             if (action.synonyms.contains(description))
                 return action;
         }
-        return null;
+        throw new CommandNotRecognizedException();
     }
 
     public static List<String> fromNames(List<String> commands) {

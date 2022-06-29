@@ -1,4 +1,4 @@
-package it.shifty.textgame.engine.display;
+package it.shifty.textgame.events.display;
 
 import it.shifty.textgame.core.dto.GameMessage;
 import it.shifty.textgame.core.presentation.DisplayOutput;
