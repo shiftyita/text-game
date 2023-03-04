@@ -22,6 +22,10 @@ public class LocalizedMessage extends GameMessage {
         super.addMessage(LocaleUtils.localizeString(message));
     }
 
+    public void addMessage(LocalizedMessage message) {
+        super.addMessage(message.getMessage());
+    }
+
     public LocalizedMessage(String message) {
         super(LocaleUtils.localizeString(message));
     }

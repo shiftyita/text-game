@@ -61,7 +61,7 @@ public class MapEngine {
         }
         if (canMove) {
             character.setPosition(destRoom);
-            message.addMessage(character.describeRoom().getMessage());
+            message.addMessage(character.describeRoom());
         }
         return message;
     }
